@@ -52,6 +52,14 @@ col1, col2 = st.columns(2)
 
 with col1:
     tgl_res = st.date_input("Tanggal Reservasi", value=datetime.now(), format="DD-MM-YYYY")
+
+    jam_operasional = []
+    for jam in range(8, 18):
+        jam_operasional.append(f"{jam:02d}:00")
+        jam_operasional.append(f"{jam:02d}:30")
+    
+    jam_res = st.selectbox("Jam Reservasi", jam_operasional)
+
     kota = st.radio("Pilih Kota Layanan:", ["Amuntai", "Tanjung", "Lainnya"], horizontal=True)
     
     kota_lainnya = ""
@@ -59,14 +67,8 @@ with col1:
         kota_lainnya = st.text_input("Sebutkan Nama Kota/Kecamatan:", placeholder="Contoh: Kalua")
             
 with col2:
-    jam_operasional = []
-    for jam in range(8, 18):
-        jam_operasional.append(f"{jam:02d}:00")
-        jam_operasional.append(f"{jam:02d}:30")
-    
-    jam_res = st.selectbox("Jam Reservasi", jam_operasional)
-    
-    layanan = st.selectbox("Pilih Layanan:", [
+    kategori_layanan = st.selectbox("Pilih Layanan:", [
+        "-- Pilih Kategori --",
         "Baby Treatment: usia 0-12 bulan",
         "Toddler Treatment: usia 1-3 tahun",
         "Kid Treatment: usia 3-6 tahun",
@@ -74,6 +76,51 @@ with col2:
         "Mom & Baby (Special Package)",
         "Mom Treatment (Konsultasi Menyusui)"
     ])
+
+    sub_opsi = []
+    
+    if "Baby Treatment" in kategori_layanan:
+        sub_opsi = [
+            "Baby Massage (Rp 65.000)",
+            "Therapy Massage: Batuk, Pilek, Kolik, Sembelit, Diare (Rp 80.000)",
+            "Immune Booster Massage: Kekebalan Tubuh (Rp 80.000)",
+            "Tuina Massage: Nafsu Makan (Rp 80.000)",
+            "Combine Massage: Terapi, Tuina, Imun Booster (Rp 100.000)"
+        ]
+    elif "Toddler Treatment" in kategori_layanan:
+        sub_opsi = [
+            "Toddler Massage (Rp 75.000)",
+            "Therapy Massage: Batuk, Pilek, Kolik, Sembelit, Diare (Rp 90.000)",
+            "Immune Booster Massage: Kekebalan Tubuh (Rp 90.000)",
+            "Tuina Massage: Nafsu Makan (Rp 90.000)",
+            "Combine Massage: Terapi, Tuina, Imun Booster (Rp 110.000)"
+        ]
+    elif "Kid Treatment" in kategori_layanan:
+        sub_opsi = [
+            "Kid Massage (Rp 85.000)",
+            "Therapy Massage: Batuk, Pilek, Kolik, Sembelit, Diare (Rp 100.000)",
+            "Immune Booster Massage: Kekebalan Tubuh (Rp 100.000)",
+            "Tuina Massage: Nafsu Makan (Rp 100.000)",
+            "Combine Massage: Terapi, Tuina, Imun Booster (Rp 120.000)"
+        ]
+    elif "Mom Treatment" == kategori_layanan:
+        sub_opsi = [
+            "Breast Care/Pijat Payudara (Sumbatan, Granjelan, Bengkak) (Rp 100.000)",
+            "Oxytocin Massage/Pijat Punggung (Melancarkan Aliran ASI) (Rp 100.000)",
+            "Lactation Massage/Pijat Payudara & Punggung (Rp 150.000)"
+        ]
+    elif "Konsultasi Menyusui" in kategori_layanan:
+        sub_opsi = [
+            "Konsultasi Menyusui Online via Chat (Rp 70.000)",
+            "Konsultasi Menyusui Online via VC/Call (Rp 100.000)",
+            "Konsultasi Menyusui Homevisit (Rp 130.000)",
+            "Konsultasi Menyusui & Breast Care (Rp 200.000)",
+            "Konsultasi Menyusui & Oxytocin Massage (Rp 200.000)",
+            "Konsultasi Menyusui & Lactation Massage (Rp 260.000)"
+        ]
+
+    # Munculkan selectbox kedua untuk detail layanan
+    layanan_final = st.selectbox("Pilih Detail Treatment:", sub_opsi)
 
 st.divider()
 
@@ -119,7 +166,8 @@ with st.form("form_biodata"):
                 f"--------------------------------\n"
                 f"📅 *Tanggal:* {tgl_res.strftime('%d-%m-%Y')} | ⏰ *Jam:* {jam_res}\n"
                 f"📍 *Kota:* {fix_kota}\n"
-                f"💆‍♀️ *Layanan:* {layanan}\n\n"
+                f"💆‍♀️ *Layanan:* {kategori_layanan}\n\n"
+                f"✨ *Detail:* {layanan_final}\n\n"
                 f"*Data Client:*\n"
                 f"👤 Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
                 f"👶 Anak: {nama_anak}\n"
