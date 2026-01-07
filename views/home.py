@@ -2,7 +2,6 @@ import streamlit as st
 from datetime import datetime
 import urllib.parse
 
-# --- 1. DATA DUMMY (Pengganti Spreadsheet sementara) ---
 DATA_CLIENT = [
     {
         "nama_bunda": "Bunda Alika",
@@ -12,40 +11,21 @@ DATA_CLIENT = [
         "alamat": "Jl. Ahmad Yani No. 12, Amuntai",
         "patokan": "Dekat Masjid Raya",
         "instagram": "@alika_mom"
+    },
+    {
+        "nama_bunda": "Bunda Sarah",
+        "usia_bunda": 31,
+        "nama_anak": "Zizi",
+        "tgl_lahir": "2022-10-15",
+        "alamat": "Komp. Perumahan Tanjung Indah Blok C",
+        "patokan": "Pagar warna hijau",
+        "instagram": "@sarah_parenting"
     }
 ]
 
-# --- 2. HEADER ---
-st.title("💆‍♀️ Reservasi Annaira Home Spa")
-st.write("Silakan lengkapi formulir reservasi di bawah ini.")
-
-# --- 3. STATUS CLIENT (DI LUAR FORM - REAKTIF) ---
-status_client = st.radio("Status Client:", ["Client Baru", "Client Lama"], horizontal=True)
-
-# Variabel penampung data autofill
-val_nama_bunda = ""
-val_usia_bunda = 25 
-val_nama_anak = ""
-val_tgl_anak = datetime(2023, 1, 1)
-val_alamat = ""
-val_patokan = ""
-val_ig = ""
-
-if status_client == "Client Lama":
-    daftar_nama = [c["nama_bunda"] for c in DATA_CLIENT]
-    search_nama = st.selectbox("Cari Nama Bunda/Ayah:", [""] + daftar_nama)
-    
-    if search_nama != "":
-        user_data = next(item for item in DATA_CLIENT if item["nama_bunda"] == search_nama)
-        val_nama_bunda = user_data["nama_bunda"]
-        val_usia_bunda = user_data["usia_bunda"]
-        val_nama_anak = user_data["nama_anak"]
-        val_tgl_anak = datetime.strptime(user_data["tgl_lahir"])
-        val_alamat = user_data["alamat"]
-        val_patokan = user_data["patokan"]
-        val_ig = user_data["instagram"]
-
-st.divider()
+st.write("Selamat datang, Bunda/Ayah.\n\n" \
+"Terimakasih telah menghubungi Annaira 🩶\n\n" \
+"Silahkan isi formulir berikut dengan data yang lengkap dan sesuai kondisi")
 
 st.subheader("🗓️ Detail Reservasi")
 col1, col2 = st.columns(2)
@@ -53,20 +33,21 @@ col1, col2 = st.columns(2)
 with col1:
     tgl_res = st.date_input("Tanggal Reservasi", value=datetime.now(), format="DD-MM-YYYY")
 
-    jam_operasional = []
-    for jam in range(8, 18):
-        jam_operasional.append(f"{jam:02d}:00")
-        jam_operasional.append(f"{jam:02d}:30")
-    
-    jam_res = st.selectbox("Jam Reservasi", jam_operasional)
-
-    kota = st.radio("Pilih Kota Layanan:", ["Amuntai", "Tanjung", "Lainnya"], horizontal=True)
+    kota = st.selectbox("Pilih Kota Layanan:", ["-- Pilih Kota Layanan --", "Amuntai", "Tanjung", "Lainnya"])
     
     kota_lainnya = ""
     if kota == "Lainnya":
         kota_lainnya = st.text_input("Sebutkan Nama Kota/Kecamatan:", placeholder="Contoh: Kalua")
             
 with col2:
+    jam_operasional = []
+    for jam in range(8, 18):
+        jam_operasional.append(f"{jam:02d}:00")
+        jam_operasional.append(f"{jam:02d}:15")
+        jam_operasional.append(f"{jam:02d}:30")
+    
+    jam_res = st.selectbox("Jam Reservasi", jam_operasional)
+
     kategori_layanan = st.selectbox("Pilih Layanan:", [
         "-- Pilih Kategori --",
         "Baby Treatment: usia 0-12 bulan",
@@ -121,6 +102,33 @@ with col2:
 
     # Munculkan selectbox kedua untuk detail layanan
     layanan_final = st.selectbox("Pilih Detail Treatment:", sub_opsi)
+
+st.divider()
+
+status_client = st.radio("Status Client:", ["Client Baru", "Client Lama"], horizontal=True)
+
+# Variabel penampung data autofill
+val_nama_bunda = ""
+val_usia_bunda = 25 
+val_nama_anak = ""
+val_tgl_anak = datetime(2023, 1, 1)
+val_alamat = ""
+val_patokan = ""
+val_ig = ""
+
+if status_client == "Client Lama":
+    daftar_nama = [c["nama_bunda"] for c in DATA_CLIENT]
+    search_nama = st.selectbox("Cari Nama Bunda/Ayah:", [""] + daftar_nama)
+    
+    if search_nama != "":
+        user_data = next(item for item in DATA_CLIENT if item["nama_bunda"] == search_nama)
+        val_nama_bunda = user_data["nama_bunda"]
+        val_usia_bunda = user_data["usia_bunda"]
+        val_nama_anak = user_data["nama_anak"]
+        val_tgl_anak = datetime.strptime(user_data["tgl_lahir"], "%Y-%m-%d")
+        val_alamat = user_data["alamat"]
+        val_patokan = user_data["patokan"]
+        val_ig = user_data["instagram"]
 
 st.divider()
 
