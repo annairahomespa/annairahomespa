@@ -161,20 +161,19 @@ with st.form("form_biodata"):
     submitted = st.form_submit_button("Siapkan Pesan WhatsApp")
 
     if submitted:
-        if not nama_bunda or not alamat:
-            st.error("Nama dan Alamat harus diisi!")
+        if not nama_bunda or not alamat or kategori_layanan == "-- Pilih Kategori --":
+            st.error("Mohon lengkapi Nama, Alamat, dan Pilih Layanan!")
         else:
-            # Penentuan Nilai Final
             fix_kota = kota_lainnya if kota == "Lainnya" else kota
             fix_kondisi = keluhan_lain if kondisi == "Yang lain:" else kondisi
             
-            # Format Pesan WhatsApp
             text_wa = (
                 f"*RESERVASI ANNAIRA HOME SPA*\n"
                 f"--------------------------------\n"
-                f"📅 *Tanggal:* {tgl_res.strftime('%d-%m-%Y')} | ⏰ *Jam:* {jam_res}\n"
+                f"📅 *Tanggal:* {tgl_res.strftime('%d-%m-%Y')}"
+                f"⏰ *Jam:* {jam_res}\n"
                 f"📍 *Kota:* {fix_kota}\n"
-                f"💆‍♀️ *Layanan:* {kategori_layanan}\n\n"
+                f"💆‍♀️ *Layanan:* {kategori_layanan}\n"
                 f"✨ *Detail:* {layanan_final}\n\n"
                 f"*Data Client:*\n"
                 f"👤 Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
@@ -188,10 +187,11 @@ with st.form("form_biodata"):
                 f"📍 Patokan: {patokan}"
             )
             
-            # Link WhatsApp (Ganti nomor di sini)
             encoded_text = urllib.parse.quote(text_wa)
             url_wa = f"https://wa.me/6282255514392?text={encoded_text}"
             
-            st.success("✅ Data reservasi telah siap!")
-            st.link_button("🚀 Kirim ke WhatsApp Sekarang", url_wa)
+            # --- TRIK REDIRECT OTOMATIS KE WA ---
+            st.markdown(f'<meta http-equiv="refresh" content="0;url={url_wa}">', unsafe_allow_html=True)
+            st.write(f"Mengarahkan ke WhatsApp... Jika tidak otomatis, [klik di sini]({url_wa})")
+            st.stop()
             st.balloons()
