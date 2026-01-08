@@ -5,7 +5,7 @@
 *.ali
 
 __pycache__/
-.streamlit/
 !.streamlit/config.toml
+.streamlit/secrets.toml
 *.pyc
 .env
