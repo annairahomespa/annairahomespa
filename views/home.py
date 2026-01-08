@@ -229,7 +229,7 @@ with st.form("form_biodata"):
         with c5:
             rencana_pertemuan_2 = st.date_input("Rencana Tanggal Pertemuan Kedua", format="DD-MM-YYYY")
         with c6:
-            jam_pertemuan_2 = st.text_input("Jam Rencana Pertemuan Kedua")
+            jam_pertemuan_2 = st.selectbox("Jam Rencana Pertemuan Kedua", jam_operasional)
        
         st.subheader("✅ Informed Consent")
         st.write("Silakan centang persetujuan di bawah ini:")
