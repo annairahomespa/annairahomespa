@@ -224,29 +224,26 @@ with st.form("form_biodata"):
         ic1 = st.checkbox("Saya memberikan izin dokumentasi foto/video selama perawatan untuk edukasi internal Annaira.")
         ic2 = st.checkbox("Saya memberikan izin dokumentasi foto/video untuk media promosi (Instagram, Tiktok, Brosur).")
         ic3 = st.checkbox("Saya memberikan izin dokumentasi foto/video (dengan catatan wajah ditutup).")
-        ic4 = st.checkbox("Saya tidak memberikan izin dokumentasi foto/video.")
-        ic5 = st.checkbox("Saya menyetujui syarat & ketentuan layanan Annaira Homespa.")
+        ic4 = st.checkbox("Saya menyetujui syarat & ketentuan layanan Annaira Homespa.")
 
         # Logika ringkasan izin dokumentasi
-        izin_list = []
-        if ic1: izin_list.append("Internal")
-        if ic2: izin_list.append("Promosi")
-        if ic3: izin_list.append("Wajah Tutup")
-        if ic4: izin_list.append("TIDAK IZIN")
+        consent_details = []
+        consent_details.append(f"Poin 1 (Edukasi): {'SETUJU' if ic1 else 'TIDAK'}")
+        consent_details.append(f"Poin 2 (Promosi): {'SETUJU' if ic2 else 'TIDAK'}")
+        consent_details.append(f"Poin 3 (Tutup Wajah): {'SETUJU' if ic3 else 'TIDAK'}")
         
-        status_izin = ", ".join(izin_list) if izin_list else "Tidak memilih"
+        ringkasan_consent = "\n   - ".join(consent_details)
 
         detail_konsultasi_wa = (
             f"\n\n*DATA TAMBAHAN KONSULTASI*\n"
-            f"📱 WA: {wa_bunda}\n"
-            f"🎂 Tgl Lahir Bunda: {tgl_lahir_bunda.strftime('%d-%m-%Y')}\n"
-            f"👶 Anak Ke: {int(anak_ke)}\n"
-            f"🚻 JK Anak: {jk_anak}\n"
-            f"🏥 Jenis Persalinan: {jenis_persalinan}\n"
-            f"🍼 ASI Saja: {asi_saja}\n"
-            f"🏁 IMD: {imd} ({imd_detail})\n"
-            f"📸 Izin Dokumentasi: {status_izin}\n"
-            f"🤝 S&K: {'Setuju' if ic5 else 'Belum Setuju'}"
+            f"WA: {wa_bunda}\n"
+            f"Tgl Lahir Bunda: {tgl_lahir_bunda.strftime('%d-%m-%Y')}\n"
+            f"Anak Ke: {int(anak_ke)}\n"
+            f"Jenis Kelamin Anak: {jk_anak}\n"
+            f"Jenis Persalinan: {jenis_persalinan}\n"
+            f"ASI Saja: {asi_saja}\n"
+            f"IMD: {imd} ({imd_detail})\n"
+            f"Izin Dokumentasi:\n {ringkasan_consent}\n"
         )
     else:
         detail_konsultasi_wa = "Terima Kasih 🩶"
@@ -257,8 +254,8 @@ with st.form("form_biodata"):
     if submitted:
         if not nama_bunda or not alamat or kategori_layanan == "-- Pilih Kategori --":
             st.error("Mohon lengkapi Nama, Alamat, dan Pilih Layanan!")
-        elif "Konsultasi Menyusui" in kategori_layanan and not ic5:
-            st.error("Untuk layanan konsultasi, Anda harus menyetujui Syarat & Ketentuan (Informed Consent).")
+        elif "Konsultasi Menyusui" in kategori_layanan and not ic4:
+            st.error("Untuk layanan konsultasi, Anda harus menyetujui Syarat & Ketentuan layanan Annaira Homespa nomor 4 (Informed Consent).")
         else:
             fix_kota = kota_lainnya if kota == "Lainnya" else kota
             fix_kondisi = keluhan_lain if kondisi == "Yang lain:" else kondisi
@@ -266,21 +263,21 @@ with st.form("form_biodata"):
             text_wa = (
                 f"*RESERVASI ANNAIRA HOME SPA*\n"
                 f"--------------------------------\n"
-                f"📅 *Tanggal:* {tgl_res.strftime('%d-%m-%Y')}\n"
-                f"⏰ *Jam:* {jam_res}\n"
-                f"📍 *Kota:* {fix_kota}\n"
-                f"💆‍♀️ *Layanan:* {kategori_layanan}\n"
-                f"✨ *Detail:* {layanan_final}\n\n"
+                f"*Tanggal:* {tgl_res.strftime('%d-%m-%Y')}\n"
+                f"*Jam:* {jam_res}\n"
+                f"*Kota:* {fix_kota}\n"
+                f"*Layanan:* {kategori_layanan}\n"
+                f"*Detail:* {layanan_final}\n\n"
                 f"*Data Client:*\n"
-                f"👤 Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
-                f"👶 Anak: {nama_anak}\n"
-                f"🎂 Tgl Lahir Anak: {tgl_lahir_anak.strftime('%d-%m-%Y')}\n"
-                f"📏 Usia Anak: {usia_anak_saat_ini}\n"
-                f"📱 Instagram: {ig}\n\n"
+                f"Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
+                f"Anak: {nama_anak}\n"
+                f"Tgl Lahir Anak: {tgl_lahir_anak.strftime('%d-%m-%Y')}\n"
+                f"Usia Anak: {usia_anak_saat_ini}\n"
+                f"Instagram: {ig}\n\n"
                 f"*Keluhan/Kondisi:* {fix_kondisi}\n\n"
                 f"*Alamat Lengkap:*\n"
                 f"{alamat}\n"
-                f"📍 Patokan: {patokan}\n"
+                f"Patokan: {patokan}\n"
                 f"{detail_konsultasi_wa}"
             )
             
