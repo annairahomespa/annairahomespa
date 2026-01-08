@@ -1,0 +1,57 @@
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap');
+
+/* Background Utama sesuai kode warna #EFEAE6 */
+.stApp {
+    background-color: #EFEAE6;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Judul dan Subheader dengan warna cokelat #604F3B */
+h1, h2, h3, label, p {
+    color: #604F3B !important;
+}
+
+/* Container Card Putih #FCFCFC */
+div[data-testid="stForm"], div.stCard {
+    background-color: #FCFCFC;
+    padding: 30px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Styling kolom input (Warna Cokelat sesuai referensi foto) */
+input, div[data-baseweb="select"], textarea {
+    background-color: #604F3B !important;
+    color: #FCFCFC !important;
+    border-radius: 10px !important;
+    border: none !important;
+}
+
+/* Warna placeholder agar terlihat di latar cokelat */
+::placeholder {
+    color: rgba(252, 252, 252, 0.6) !important;
+}
+
+/* Tombol Submit */
+button[kind="formSubmit"] {
+    background-color: #604F3B !important;
+    color: #FCFCFC !important;
+    border-radius: 15px !important;
+    border: none !important;
+    font-weight: 600 !important;
+    width: 100%;
+}
+
+button[kind="formSubmit"]:hover {
+    background-color: #4A3D2E !important;
+    transform: translateY(-2px);
+    transition: 0.3s;
+}
+
+/* Menyesuaikan warna divider */
+hr {
+    border-color: #604F3B;
+    opacity: 0.2;
+}
