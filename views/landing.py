@@ -41,7 +41,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-col_spacer, col_button, col_rest = st.columns([0.1, 1, 1])
+col_spacer, col_button, col_rest = st.columns([0.13, 1, 1])
 
 with col_button:
     if st.button("Atur Jadwal Sesi"):
