@@ -9,6 +9,6 @@ admin_page = st.Page("views/admin.py", title="Admin Dashboard", icon="📊")
 landing_page = st.Page("views/landing.py", title="Landing Page", icon="🏠", default=True)
 
 # Navigasi
-pg = st.navigation([landing_page, home_page, admin_page])
+pg = st.navigation([landing_page, home_page, admin_page], position="hidden")
 
 pg.run()
