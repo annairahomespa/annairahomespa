@@ -36,7 +36,7 @@ st.write("Selamat datang, Bunda/Ayah.\n\n" \
 "Silahkan isi formulir berikut dengan data yang lengkap dan sesuai kondisi yaa")
 
 with st.container(key="card_reservasi"):
-    st.subheader("🗓️ Detail Reservasi")
+    st.subheader("Detail Reservasi")
     col1, col2 = st.columns(2)
 
     with col1:
@@ -143,7 +143,7 @@ if status_client == "Client Lama":
         val_ig = user_data["instagram"]
 
 with st.form("form_biodata"):
-    st.subheader("👨‍👩‍👧 Data Orang Tua & Anak")
+    st.subheader("Data Orang Tua & Anak")
     nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=val_nama_bunda)
     usia_bunda = st.number_input("Usia Bunda", min_value=12, max_value=80, value=val_usia_bunda)
     
@@ -163,13 +163,13 @@ with st.form("form_biodata"):
     )
     keluhan_lain = st.text_input("Jika pilih 'Yang lain', sebutkan di sini:", placeholder="Kosongkan jika tidak ada")
 
-    st.subheader("🏠 Alamat Lengkap")
+    st.subheader("Alamat Lengkap")
     alamat = st.text_area("Alamat Rumah (Isi Lengkap)", value=val_alamat)
     patokan = st.text_input("Catatan Tambahan Alamat (Patokan Lokasi)", value=val_patokan)
 
     if "Konsultasi Menyusui" in kategori_layanan:
         st.divider()
-        st.subheader("📋 Data Tambahan Konsultasi Laktasi")
+        st.subheader("Data Tambahan Konsultasi Laktasi")
         st.info("Mohon lengkapi riwayat medis berikut untuk memaksimalkan sesi konsultasi.")
         
         c1, c2 = st.columns(2)

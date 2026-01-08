@@ -16,6 +16,7 @@
 /* --- 1. SETTING DASAR --- */
 .stApp {
     font-family: 'Nunito';
+    font-weight: 1000 !important;
     animation: pageTransition 0.8s ease-out;
 }
 
