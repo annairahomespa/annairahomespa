@@ -65,12 +65,12 @@ with st.container(key="card_reservasi"):
             "Kid Treatment: usia 3-6 tahun",
             "Mom Treatment",
             "Mom & Baby (Special Package)",
-            "Mom Treatment (Konsultasi Menyusui)"
+            "Konsultasi Menyusui"
         ])
 
         sub_opsi = []
         
-        if "Baby Treatment" in kategori_layanan:
+        if "Baby Treatment: usia 0-12 bulan" in kategori_layanan:
             sub_opsi = [
                 "Baby Massage (Rp 65.000)",
                 "Therapy Massage: Batuk, Pilek, Kolik, Sembelit, Diare (Rp 80.000)",
@@ -78,7 +78,7 @@ with st.container(key="card_reservasi"):
                 "Tuina Massage: Nafsu Makan (Rp 80.000)",
                 "Combine Massage: Terapi, Tuina, Imun Booster (Rp 100.000)"
             ]
-        elif "Toddler Treatment" in kategori_layanan:
+        elif "Toddler Treatment: usia 1-3 tahun" in kategori_layanan:
             sub_opsi = [
                 "Toddler Massage (Rp 75.000)",
                 "Therapy Massage: Batuk, Pilek, Kolik, Sembelit, Diare (Rp 90.000)",
@@ -86,7 +86,7 @@ with st.container(key="card_reservasi"):
                 "Tuina Massage: Nafsu Makan (Rp 90.000)",
                 "Combine Massage: Terapi, Tuina, Imun Booster (Rp 110.000)"
             ]
-        elif "Kid Treatment" in kategori_layanan:
+        elif "Kid Treatment: usia 3-6 tahun" in kategori_layanan:
             sub_opsi = [
                 "Kid Massage (Rp 85.000)",
                 "Therapy Massage: Batuk, Pilek, Kolik, Sembelit, Diare (Rp 100.000)",
@@ -94,26 +94,33 @@ with st.container(key="card_reservasi"):
                 "Tuina Massage: Nafsu Makan (Rp 100.000)",
                 "Combine Massage: Terapi, Tuina, Imun Booster (Rp 120.000)"
             ]
-        elif "Mom Treatment" == kategori_layanan:
+        elif "Mom Treatment" in kategori_layanan:
             sub_opsi = [
                 "Breast Care/Pijat Payudara (Sumbatan, Granjelan, Bengkak) (Rp 100.000)",
                 "Oxytocin Massage/Pijat Punggung (Melancarkan Aliran ASI) (Rp 100.000)",
-                "Lactation Massage/Pijat Payudara & Punggung (Rp 150.000)"
+                "Lactation Massage/Pijat Payudara & Punggung (Melancarkan & Meningkatkan Produksi ASI) (Rp 150.000)"
+            ]
+        elif "Mom & Baby (Special Package)" in kategori_layanan:
+            sub_opsi = [
+                "Happy Package: Pijat Laktasi 1x & Pijat Bayi 1x (Rp 205.000)",
+                "Calm Package: Pijat Laktasi 1x & Pijat Bayi Terapi 1x (Rp 220.000)",
+                "Love Package: Pijat Laktasi 2x & Pijat Bayi 2x (Rp 400.000)",
+                "Mindfull Package: Pijat Laktasi 2x & Pijat Bayi Terapi 2x (Rp 420.000)"
             ]
         elif "Konsultasi Menyusui" in kategori_layanan:
             sub_opsi = [
                 "-- Pilih Kategori --",
                 "Konsultasi Menyusui Online via Chat (Rp 70.000)",
-                "Konsultasi Menyusui Online via VC/Call (Rp 100.000)",
-                "Konsultasi Menyusui Homevisit (Rp 130.000)",
-                "Konsultasi Menyusui & Breast Care (Rp 200.000)",
-                "Konsultasi Menyusui & Oxytocin Massage (Rp 200.000)",
-                "Konsultasi Menyusui & Lactation Massage (Rp 260.000)"
+                "Konsultasi Menyusui Online via VC/Call 60 menit (Rp 100.000)",
+                "Konsultasi Menyusui Homevisit 60 menit (Rp 130.000)",
+                "Konsultasi Menyusui & Oxytocin Massage 100 menit (Rp 220.000)",
+                "Konsultasi Menyusui & Breast Care 110 menit (Rp 240.000)",
+                "Konsultasi Menyusui & Lactation Massage 120 menit (Rp 260.000)"
             ]
 
         # Munculkan selectbox kedua untuk detail layanan
         if kategori_layanan != "-- Pilih Kategori --":
-            layanan_final = st.selectbox("Pilih Detail Treatment:", sub_opsi)
+            layanan_final = st.radio("Pilih Detail Treatment:", sub_opsi)
         else:
             layanan_final = "-- Pilih Kategori --"
 
@@ -152,7 +159,7 @@ with st.form("form_biodata"):
         nama_anak = st.text_input("Nama Lengkap Anak", value=val_nama_anak)
         tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=val_tgl_anak, format="DD-MM-YYYY")
     with col4:
-        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini", placeholder="Contoh: 15 bulan")
+        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
         ig = st.text_input("Akun Instagram", value=val_ig, placeholder="annaira.homespa")
 
     st.subheader("🩺 Kondisi Khusus / Keluhan")
