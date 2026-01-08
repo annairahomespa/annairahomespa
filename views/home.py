@@ -218,19 +218,35 @@ with st.form("form_biodata"):
             rencana_pertemuan_2 = st.date_input("Rencana Tanggal Pertemuan Kedua", format="DD-MM-YYYY")
         with c6:
             jam_pertemuan_2 = st.text_input("Jam Rencana Pertemuan Kedua")
-            
-        informed_consent = st.checkbox("Saya (Bunda/Ayah) menyetujui Informed Consent (persetujuan tindakan)")
+       
+        st.subheader("✅ Informed Consent")
+        st.write("Silakan centang persetujuan di bawah ini:")
+        ic1 = st.checkbox("Saya memberikan izin dokumentasi foto/video selama perawatan untuk edukasi internal Annaira.")
+        ic2 = st.checkbox("Saya memberikan izin dokumentasi foto/video untuk media promosi (Instagram, Tiktok, Brosur).")
+        ic3 = st.checkbox("Saya memberikan izin dokumentasi foto/video (dengan catatan wajah ditutup).")
+        ic4 = st.checkbox("Saya tidak memberikan izin dokumentasi foto/video.")
+        ic5 = st.checkbox("Saya menyetujui syarat & ketentuan layanan Annaira Homespa.")
+
+        # Logika ringkasan izin dokumentasi
+        izin_list = []
+        if ic1: izin_list.append("Internal")
+        if ic2: izin_list.append("Promosi")
+        if ic3: izin_list.append("Wajah Tutup")
+        if ic4: izin_list.append("TIDAK IZIN")
+        
+        status_izin = ", ".join(izin_list) if izin_list else "Tidak memilih"
 
         detail_konsultasi_wa = (
             f"\n\n*DATA TAMBAHAN KONSULTASI*\n"
             f"📱 WA: {wa_bunda}\n"
-            f"🎂 Tgl Lahir Bunda: {tgl_lahir_bunda}\n"
-            f"👶 Anak Ke: {anak_ke}\n"
+            f"🎂 Tgl Lahir Bunda: {tgl_lahir_bunda.strftime('%d-%m-%Y')}\n"
+            f"👶 Anak Ke: {int(anak_ke)}\n"
             f"🚻 JK Anak: {jk_anak}\n"
             f"🏥 Jenis Persalinan: {jenis_persalinan}\n"
             f"🍼 ASI Saja: {asi_saja}\n"
             f"🏁 IMD: {imd} ({imd_detail})\n"
-            f"🤝 Informed Consent: {'Setuju' if informed_consent else 'Belum'}"
+            f"📸 Izin Dokumentasi: {status_izin}\n"
+            f"🤝 S&K: {'Setuju' if ic5 else 'Belum Setuju'}"
         )
     else:
         detail_konsultasi_wa = "Terima Kasih 🩶"
@@ -241,6 +257,8 @@ with st.form("form_biodata"):
     if submitted:
         if not nama_bunda or not alamat or kategori_layanan == "-- Pilih Kategori --":
             st.error("Mohon lengkapi Nama, Alamat, dan Pilih Layanan!")
+        elif "Konsultasi Menyusui" in kategori_layanan and not ic5:
+            st.error("Untuk layanan konsultasi, Anda harus menyetujui Syarat & Ketentuan (Informed Consent).")
         else:
             fix_kota = kota_lainnya if kota == "Lainnya" else kota
             fix_kondisi = keluhan_lain if kondisi == "Yang lain:" else kondisi
@@ -248,7 +266,7 @@ with st.form("form_biodata"):
             text_wa = (
                 f"*RESERVASI ANNAIRA HOME SPA*\n"
                 f"--------------------------------\n"
-                f"📅 *Tanggal:* {tgl_res.strftime('%d-%m-%Y')}"
+                f"📅 *Tanggal:* {tgl_res.strftime('%d-%m-%Y')}\n"
                 f"⏰ *Jam:* {jam_res}\n"
                 f"📍 *Kota:* {fix_kota}\n"
                 f"💆‍♀️ *Layanan:* {kategori_layanan}\n"
@@ -262,7 +280,7 @@ with st.form("form_biodata"):
                 f"*Keluhan/Kondisi:* {fix_kondisi}\n\n"
                 f"*Alamat Lengkap:*\n"
                 f"{alamat}\n"
-                f"📍 Patokan: {patokan}"
+                f"📍 Patokan: {patokan}\n"
                 f"{detail_konsultasi_wa}"
             )
             
