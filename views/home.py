@@ -261,7 +261,7 @@ with st.form("form_biodata"):
         detail_konsultasi_wa = "Terima Kasih 🩶"
 
     # Tombol submit form
-    submitted = st.form_submit_button("Siapkan Pesan WhatsApp")
+    submitted = st.form_submit_button("📲 Siapkan Pesan WhatsApp")
 
     if submitted:
         # 1. CEK VALIDASI DASAR (Nama, Alamat, Kategori Utama)
