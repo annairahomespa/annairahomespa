@@ -1,7 +1,5 @@
-/* views/landing.css */
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600&display=swap');
 
-/* Reset Layout */
 [data-testid="stMainViewBlockContainer"] {
     padding: 0 !important;
     max-width: 100% !important;
@@ -10,7 +8,6 @@
 header {visibility: hidden;} 
 [data-testid="stSidebar"] {display: none;}
 
-/* Hero Container */
 .hero-container {
     padding: 100px 0 0 8%;
     max-width: 1200px;
@@ -42,7 +39,7 @@ header {visibility: hidden;}
     color: #604F3B;
     font-size: 1.25rem;
     line-height: 1.6;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     opacity: 0.85;
     font-weight: 700 !important;
 }
@@ -63,8 +60,11 @@ header {visibility: hidden;}
 
 .stButton button:hover {
     background-color: #F8F5F2 !important;
-    transform: translateY(-2px);
-    border: 1px solid #604F3B !important;
+    transform: scale(1.03);
+}
+
+.stButton {
+    animation: slideUp 1.5s ease-out; /* Sedikit lebih lambat agar ada efek sekuensial */
 }
 
 /* Footer Instagram */

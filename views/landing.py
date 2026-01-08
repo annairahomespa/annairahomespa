@@ -2,22 +2,18 @@ import streamlit as st
 import base64
 import os
 
-# Fungsi load CSS eksternal
 def local_css(file_name):
     if os.path.exists(file_name):
         with open(file_name) as f:
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-# Fungsi load background
 def get_base64(bin_file):
     with open(bin_file, 'rb') as f:
         data = f.read()
     return base64.b64encode(data).decode()
 
-# 1. Terapkan Style
 local_css("views/css/landing.css")
 
-# 2. Pasang Background
 img_base64 = get_base64("image/background.png") 
 st.markdown(f"""
     <style>
@@ -30,7 +26,6 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# 3. Konten Teks
 st.markdown("""
     <div class="hero-container">
         <h1 class="hero-title">Reservasi Layanan &<br>Data Klien Annaira</h1>
@@ -51,5 +46,4 @@ with col_button:
     if st.button("Atur Jadwal Sesi"):
         st.switch_page("views/home.py")
 
-# 5. Footer
 st.markdown('<div class="hero-footer-right">annaira.homespa</div>', unsafe_allow_html=True)
