@@ -6,5 +6,6 @@
 
 __pycache__/
 .streamlit/
+!.streamlit/config.toml
 *.pyc
 .env
