@@ -56,6 +56,7 @@ with st.container(key="card_reservasi"):
             jam_operasional.append(f"{jam:02d}:00")
             jam_operasional.append(f"{jam:02d}:15")
             jam_operasional.append(f"{jam:02d}:30")
+            jam_operasional.append(f"{jam:02d}:45")
         
         jam_res = st.selectbox("Jam Reservasi", jam_operasional)
 
