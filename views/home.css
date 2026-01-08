@@ -1,57 +1,71 @@
-/* style.css */
+/* style.css - Annaira Home Spa (Versi Optimal dengan config.toml) */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap');
 
-/* Background Utama sesuai kode warna #EFEAE6 */
+/* --- 1. SETTING DASAR --- */
 .stApp {
-    background-color: #EFEAE6;
     font-family: 'Nunito', sans-serif;
 }
 
-/* Judul dan Subheader dengan warna cokelat #604F3B */
-h1, h2, h3, label, p {
+/* --- 2. KARTU PUTIH (CONTAINER & FORM) --- */
+/* config.toml tidak bisa mengatur shadow dan border-radius ini */
+.st-key-card_reservasi, div[data-testid="stForm"] {
+    background-color: #FCFCFC !important;
+    padding: 35px !important;
+    border-radius: 25px !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(96, 79, 59, 0.05) !important;
+    margin-bottom: 25px !important;
+}
+
+/* Memaksa semua label input berwarna cokelat tua */
+label p, .stMarkdown p, .stSelectbox label p {
+    color: #604F3B !important;
+    font-weight: 600 !important;
+}
+
+/* Khusus untuk teks label pada Date Input dan Selectbox */
+div[data-testid="stWidgetLabel"] p {
     color: #604F3B !important;
 }
 
-/* Container Card Putih #FCFCFC */
-div[data-testid="stForm"], div.stCard {
-    background-color: #FCFCFC;
-    padding: 30px;
-    border-radius: 20px;
-    border: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
-/* Styling kolom input (Warna Cokelat sesuai referensi foto) */
-input, div[data-baseweb="select"], textarea {
-    background-color: #604F3B !important;
-    color: #FCFCFC !important;
-    border-radius: 10px !important;
+/* --- 3. INPUT FIELD (FULL COKELAT #604F3B) --- */
+/* config.toml tidak mewarnai background kotak input secara otomatis */
+div[data-baseweb="input"], 
+div[data-baseweb="select"] > div, 
+div[data-baseweb="base-input"],
+.stDateInput > div {
+    background-color: #604F3B !important; 
+    border-radius: 12px !important;
     border: none !important;
 }
 
-/* Warna placeholder agar terlihat di latar cokelat */
-::placeholder {
-    color: rgba(252, 252, 252, 0.6) !important;
+/* Warna teks dan ikon di dalam kotak input */
+input, .stSelectbox div, .stDateInput div, div[role="button"], textarea, svg {
+    color: #FCFCFC !important;
+    fill: #FCFCFC !important;
 }
 
-/* Tombol Submit */
+/* --- 4. TOMBOL SUBMIT --- */
+/* Menambah kelengkungan tombol agar lebih estetik */
 button[kind="formSubmit"] {
-    background-color: #604F3B !important;
-    color: #FCFCFC !important;
     border-radius: 15px !important;
-    border: none !important;
     font-weight: 600 !important;
     width: 100%;
 }
 
-button[kind="formSubmit"]:hover {
-    background-color: #4A3D2E !important;
-    transform: translateY(-2px);
-    transition: 0.3s;
+/* --- 5. PERAPI JARAK --- */
+[data-testid="column"] {
+    padding: 0 10px !important;
 }
 
-/* Menyesuaikan warna divider */
-hr {
-    border-color: #604F3B;
-    opacity: 0.2;
+
+/* Mengubah warna ikon plus dan minus menjadi cokelat agar terlihat */
+div[data-testid="stNumberInput"] button svg {
+    fill: #604F3B !important;
 }
+
+/* Memberi warna latar belakang tombol saat di-hover agar lebih jelas */
+div[data-testid="stNumberInput"] button:hover {
+    background-color: rgba(96, 79, 59, 0.1) !important;
+}
+
