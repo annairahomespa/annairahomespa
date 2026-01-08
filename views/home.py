@@ -157,6 +157,84 @@ with st.form("form_biodata"):
     alamat = st.text_area("Alamat Rumah (Isi Lengkap)", value=val_alamat)
     patokan = st.text_input("Catatan Tambahan Alamat (Patokan Lokasi)", value=val_patokan)
 
+    if "Konsultasi Menyusui" in kategori_layanan:
+        st.divider()
+        st.subheader("📋 Data Tambahan Konsultasi Laktasi")
+        st.info("Mohon lengkapi riwayat medis berikut untuk memaksimalkan sesi konsultasi.")
+        
+        c1, c2 = st.columns(2)
+        with c1:
+            wa_bunda = st.text_input("Nomor HP Bunda (WhatsApp)")
+            tgl_lahir_bunda = st.date_input("Tanggal Lahir Bunda", format="DD-MM-YYYY")
+            pekerjaan = st.text_input("Pekerjaan Bunda")
+            anak_ke = st.number_input("Ananda merupakan anak ke berapa?", min_value=1, step=1)
+        with c2:
+            tempat_lahir_anak = st.text_input("Tempat Lahir Anak")
+            jk_anak = st.selectbox("Jenis Kelamin Anak", ["Laki-laki", "Perempuan"])
+            usia_nifas = st.text_input("Usia Nifas (bila nifas)")
+            usia_hamil = st.text_input("Usia Kehamilan (jika hamil)")
+
+        st.markdown("---")
+        st.write("**Riwayat Kehamilan & Persalinan**")
+        riwayat_sebelumnya = st.text_area("Ceritakan riwayat menyusui anak sebelumnya (jika ada)")
+        riwayat_sekarang = st.text_area("Riwayat kehamilan dan persalinan saat ini")
+        
+        c3, c4 = st.columns(2)
+        with c3:
+            jenis_persalinan = st.selectbox("Jenis Persalinan saat ini", ["Normal/Vagina", "SC (Sesar)", "Waterbirth", "Lainnya"])
+            usia_kehamilan_lahir = st.text_input("Usia Kehamilan (saat melahirkan)")
+        with c4:
+            tempat_persalinan = st.text_input("Tempat Persalinan (RS/Klinik/Rumah)")
+            rencana_persalinan = st.text_input("Rencana Persalinan (jika sedang hamil)")
+
+        imd = st.radio("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan?", ["Iya", "Tidak"])
+        imd_detail = st.text_input("Jika iya, berapa lama IMD dilakukan?") if imd == "Iya" else ""
+        
+        rawat_gabung = st.radio("Apakah setelah persalinan Bayi rawat gabung dengan Bunda?", ["Iya", "Tidak"])
+        kondisi_bayi = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan?")
+        
+        st.markdown("---")
+        st.write("**Kebiasaan & Nutrisi Bayi**")
+        pake_dot = st.radio("Apakah bayi pernah menggunakan dot?", ["Pernah", "Tidak Pernah"])
+        dot_detail = st.text_area("Jika pernah, sejak kapan dan ceritakan kronologisnya") if pake_dot == "Pernah" else ""
+        
+        asi_saja = st.radio("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?", ["ASI Saja", "ASI + Sufor/Lainnya"])
+        bb_bayi = st.text_area("Rincian BB (berat badan) bayi tiap bulannya (Lahir - Sekarang)")
+        
+        st.markdown("---")
+        st.write("**Manajemen Laktasi Bunda**")
+        kebiasaan_pompa = st.text_area("Bagaimana kebiasaan Bunda dan hasilnya dalam proses memompa ASI?")
+        asi_booster = st.text_area("Apakah Bunda mengkonsumsi ASI booster? Merk apa saja?")
+        konsul_sebelumnya = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi?", ["Pernah", "Belum Pernah"])
+        masalah_lain = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan")
+
+        st.markdown("---")
+        st.write("**Dukungan & Harapan**")
+        dukungan = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
+        harapan = st.text_area("Apa harapan Bunda dari konsultasi/pijat ini?")
+        
+        c5, c6 = st.columns(2)
+        with c5:
+            rencana_pertemuan_2 = st.date_input("Rencana Tanggal Pertemuan Kedua", format="DD-MM-YYYY")
+        with c6:
+            jam_pertemuan_2 = st.text_input("Jam Rencana Pertemuan Kedua")
+            
+        informed_consent = st.checkbox("Saya (Bunda/Ayah) menyetujui Informed Consent (persetujuan tindakan)")
+
+        detail_konsultasi_wa = (
+            f"\n\n*DATA TAMBAHAN KONSULTASI*\n"
+            f"📱 WA: {wa_bunda}\n"
+            f"🎂 Tgl Lahir Bunda: {tgl_lahir_bunda}\n"
+            f"👶 Anak Ke: {anak_ke}\n"
+            f"🚻 JK Anak: {jk_anak}\n"
+            f"🏥 Jenis Persalinan: {jenis_persalinan}\n"
+            f"🍼 ASI Saja: {asi_saja}\n"
+            f"🏁 IMD: {imd} ({imd_detail})\n"
+            f"🤝 Informed Consent: {'Setuju' if informed_consent else 'Belum'}"
+        )
+    else:
+        detail_konsultasi_wa = "Terima Kasih 🩶"
+
     # Tombol submit form
     submitted = st.form_submit_button("Siapkan Pesan WhatsApp")
 
@@ -185,12 +263,12 @@ with st.form("form_biodata"):
                 f"*Alamat Lengkap:*\n"
                 f"{alamat}\n"
                 f"📍 Patokan: {patokan}"
+                f"{detail_konsultasi_wa}"
             )
             
             encoded_text = urllib.parse.quote(text_wa)
             url_wa = f"https://wa.me/6282255514392?text={encoded_text}"
             
-            # --- TRIK REDIRECT OTOMATIS KE WA ---
             st.markdown(f'<meta http-equiv="refresh" content="0;url={url_wa}">', unsafe_allow_html=True)
             st.write(f"Mengarahkan ke WhatsApp... Jika tidak otomatis, [klik di sini]({url_wa})")
             st.stop()
