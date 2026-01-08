@@ -153,7 +153,7 @@ with st.form("form_biodata"):
         tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=val_tgl_anak, format="DD-MM-YYYY")
     with col4:
         usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini", placeholder="Contoh: 15 bulan")
-        ig = st.text_input("Akun Instagram", value=val_ig)
+        ig = st.text_input("Akun Instagram", value=val_ig, placeholder="annaira.homespa")
 
     st.subheader("🩺 Kondisi Khusus / Keluhan")
     kondisi = st.radio(
@@ -164,8 +164,8 @@ with st.form("form_biodata"):
     keluhan_lain = st.text_input("Jika pilih 'Yang lain', sebutkan di sini:", placeholder="Kosongkan jika tidak ada")
 
     st.subheader("Alamat Lengkap")
-    alamat = st.text_area("Alamat Rumah (Isi Lengkap)", value=val_alamat)
-    patokan = st.text_input("Catatan Tambahan Alamat (Patokan Lokasi)", value=val_patokan)
+    alamat = st.text_area("Alamat Rumah (Isi Lengkap)", value=val_alamat, placeholder="Jl Annaira RT.7 No.44 Tirto Utomo")
+    patokan = st.text_input("Catatan Tambahan Alamat (Patokan Lokasi)", value=val_patokan, placeholder="Samping Mesjid Al Karomah")
 
     if "Konsultasi Menyusui" in kategori_layanan:
         st.divider()

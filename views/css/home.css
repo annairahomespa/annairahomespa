@@ -53,6 +53,12 @@ div[data-baseweb="base-input"],
     border: none !important;
 }
 
+input::placeholder {
+    opacity: 0.4 !important; /* Semakin kecil angka, semakin transparan/tipis */
+    color: #604F3B !important; /* Menggunakan warna cokelat Annaira */
+    font-weight: 400 !important; /* Membuat font tidak tebal */
+}
+
 /* Warna teks dan ikon di dalam kotak input */
 input, .stSelectbox div, .stDateInput div, div[role="button"], textarea, svg {
     color: #FCFCFC !important;
