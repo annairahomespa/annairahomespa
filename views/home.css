@@ -69,3 +69,12 @@ div[data-testid="stNumberInput"] button:hover {
     background-color: rgba(96, 79, 59, 0.1) !important;
 }
 
+input, textarea {
+    caret-color: #FCFCFC !important;
+}
+
+/* Memastikan teks yang sedang diketik juga berwarna putih bersih */
+input {
+    color: #FCFCFC !important;
+    -webkit-text-fill-color: #FCFCFC !important;
+}

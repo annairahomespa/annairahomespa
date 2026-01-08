@@ -103,6 +103,7 @@ with st.container(key="card_reservasi"):
             ]
         elif "Konsultasi Menyusui" in kategori_layanan:
             sub_opsi = [
+                "-- Pilih Kategori --",
                 "Konsultasi Menyusui Online via Chat (Rp 70.000)",
                 "Konsultasi Menyusui Online via VC/Call (Rp 100.000)",
                 "Konsultasi Menyusui Homevisit (Rp 130.000)",
@@ -112,7 +113,10 @@ with st.container(key="card_reservasi"):
             ]
 
         # Munculkan selectbox kedua untuk detail layanan
-        layanan_final = st.selectbox("Pilih Detail Treatment:", sub_opsi)
+        if kategori_layanan != "-- Pilih Kategori --":
+            layanan_final = st.selectbox("Pilih Detail Treatment:", sub_opsi)
+        else:
+            layanan_final = "-- Pilih Kategori --"
 
 status_client = st.radio("Status Client:", ["Client Baru", "Client Lama"], horizontal=True)
 
@@ -259,14 +263,32 @@ with st.form("form_biodata"):
     submitted = st.form_submit_button("Siapkan Pesan WhatsApp")
 
     if submitted:
+        # 1. CEK VALIDASI DASAR (Nama, Alamat, Kategori Utama)
         if not nama_bunda or not alamat or kategori_layanan == "-- Pilih Kategori --":
-            st.error("Mohon lengkapi Nama, Alamat, dan Pilih Layanan!")
-        elif "Konsultasi Menyusui" in kategori_layanan and not ic4:
-            st.error("Untuk layanan konsultasi, Anda harus menyetujui Syarat & Ketentuan layanan Annaira Homespa nomor 4 (Informed Consent).")
+            st.error("❌ Mohon lengkapi Nama, Alamat, dan Pilih Layanan!")
+        
+        # 2. CEK VALIDASI KOTA (Jika pilih 'Lainnya' tapi teks kosong)
+        elif kota == "Lainnya" and not kota_lainnya:
+            st.error("❌ Mohon sebutkan nama Kota/Kecamatan Anda!")
+        elif kota == "-- Pilih Kota Layanan --":
+            st.error("❌ Mohon pilih Kota Layanan Anda!")
+
+        # 3. CEK VALIDASI DETAIL TREATMENT (Agar tidak terkirim "-- Pilih Detail Treatment --")
+        elif layanan_final == "-- Pilih Detail Treatment --" or layanan_final == "No options to select":
+            st.error("❌ Mohon pilih Detail Treatment yang diinginkan!")
+
+        # 4. CEK VALIDASI INFORMED CONSENT (Syarat No. 4 untuk Konsultasi)
+        elif "Konsultasi Menyusui" in kategori_layanan and not ic4: # Sesuaikan ic4 adalah checkbox S&K Bunda
+            st.error("❌ Untuk layanan konsultasi, Anda harus menyetujui Syarat & Ketentuan layanan Annaira Homespa (Informed Consent).")
+
+        # 5. JIKA SEMUA SUDAH OK
         else:
+            st.success("✅ Data lengkap! Sedang menyiapkan pesan WhatsApp...")
+            
+            # Penentuan data final
             fix_kota = kota_lainnya if kota == "Lainnya" else kota
             fix_kondisi = keluhan_lain if kondisi == "Yang lain:" else kondisi
-            
+                
             text_wa = (
                 f"*RESERVASI ANNAIRA HOME SPA*\n"
                 f"--------------------------------\n"
