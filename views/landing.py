@@ -1,6 +1,7 @@
 import streamlit as st
 import base64
 import os
+import time
 
 def local_css(file_name):
     if os.path.exists(file_name):
@@ -44,6 +45,7 @@ col_spacer, col_button, col_rest = st.columns([0.1, 1, 1])
 
 with col_button:
     if st.button("Atur Jadwal Sesi"):
+        time.sleep(0.5)
         st.switch_page("views/home.py")
 
 st.markdown('<div class="hero-footer-right">annaira.homespa</div>', unsafe_allow_html=True)
