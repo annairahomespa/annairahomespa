@@ -106,67 +106,73 @@ with st.container(key="card_reservasi"):
         if kategori_layanan != "-- Pilih Kategori --":
             layanan_final = st.radio("Pilih Detail Treatment:", LAYANAN_DATA[kategori_layanan])
 
-st.markdown("### **Status Client:**")
-status_client = st.radio("",["**Client Baru**", "**Client Lama**"], horizontal=True, label_visibility="collapsed")
+import streamlit as st
+from datetime import datetime
+ 
+default_data = {
+    "nama_bunda": "",
+    "usia_bunda": 25,
+    "nama_anak": "",
+    "tgl_lahir": datetime(2023, 1, 1),
+    "alamat": "",
+    "alamat pengasuh": "",
+    "patokan": "",
+    "instagram": ""
+}
 
-# Variabel penampung data autofill
-val_nama_bunda = ""
-val_usia_bunda = 25 
-val_nama_anak = ""
-val_tgl_anak = datetime(2023, 1, 1)
-val_alamat = ""
-val_alamat_pengasuh =""
-val_patokan = ""
-val_ig = ""
+st.markdown("### **Status Client:**")
+status_client = st.radio("", ["**Client Baru**", "**Client Lama**"], horizontal=True, label_visibility="collapsed")
 
 if status_client == "**Client Lama**":
     daftar_nama = sorted([c["nama_bunda"] for c in DATA_CLIENT])
     search_nama = st.selectbox(
         "Cari Nama Bunda/Ayah (Ketik untuk mencari):", 
-        options=[""] + daftar_nama,
-        index=0
+        options=[""] + daftar_nama
     )
     
-    if search_nama != "":
-        user_data = next(item for item in DATA_CLIENT if item["nama_bunda"] == search_nama)
-        val_nama_bunda = user_data["nama_bunda"]
-        val_usia_bunda = user_data["usia_bunda"]
-        val_nama_anak = user_data["nama_anak"]
-        val_tgl_anak = datetime.strptime(user_data["tgl_lahir"], "%Y-%m-%d")
-        val_alamat = user_data["alamat"]
-        val_alamat_pengasuh = user_data["alamat pengasuh"]
-        val_patokan = user_data["patokan"]
-        val_ig = user_data["instagram"]
+    if search_nama:
+        user_match = next((item for item in DATA_CLIENT if item["nama_bunda"] == search_nama), None)
+        if user_match:
+            default_data.update(user_match)
+            # Konversi string tanggal ke objek datetime jika perlu
+            if isinstance(default_data["tgl_lahir"], str):
+                default_data["tgl_lahir"] = datetime.strptime(default_data["tgl_lahir"], "%Y-%m-%d")
 
 with st.form("form_biodata"):
     st.subheader("Data Orang Tua & Anak")
-    nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=val_nama_bunda)
-    usia_bunda = st.number_input("Usia Bunda", min_value=12, max_value=80, value=val_usia_bunda)
+    
+    nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=default_data["nama_bunda"])
+    usia_bunda = st.number_input("Usia Bunda", 12, 80, value=default_data["usia_bunda"])
     
     col3, col4 = st.columns(2)
     with col3:
-        nama_anak = st.text_input("Nama Lengkap Anak", value=val_nama_anak)
-        ig = st.text_input("Akun Instagram", value=val_ig, placeholder="annaira.homespa")
+        nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"])
+        ig = st.text_input("Akun Instagram", value=default_data["instagram"], placeholder="annaira.homespa")
+        
     with col4:
-        if status_client != "**Client Lama**":
-            tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=val_tgl_anak, format="DD-MM-YYYY")
+        # Gunakan get() agar aman jika key tidak ada
+        tgl_anak = default_data.get("tgl_lahir", datetime.now())
+        if status_client == "**Client Baru**":
+            tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=tgl_anak, format="DD-MM-YYYY")
         usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
     
-    if status_client != "**Client Lama**":
-        info = st.text_input("Bunda/Ayah tau annaira dari mana?")
+    # Input khusus client baru
+    if status_client == "**Client Baru**":
+        info_sumber = st.text_input("Bunda/Ayah tau annaira dari mana?")
 
     st.subheader("Kondisi Khusus / Keluhan")
-    kondisi = st.radio(
-        "Kondisi Saat Ini:",
-        ["Tidak Ada", "Alergi Minyak", "Sedang Demam", "Batuk Pilek", "Kolik/Kembung", 
-         "Diare", "Sembelit", "Payudara Bengkak", "Sumbatan ASI", "Yang lain:"]
-    )
+    opsi_kondisi = [
+        "Tidak Ada", "Alergi Minyak", "Sedang Demam", "Batuk Pilek", 
+        "Kolik/Kembung", "Diare", "Sembelit", "Payudara Bengkak", 
+        "Sumbatan ASI", "Yang lain:"
+    ]
+    kondisi = st.radio("Kondisi Saat Ini:", opsi_kondisi)
     keluhan_lain = st.text_input("Jika pilih 'Yang lain', sebutkan di sini:", placeholder="Kosongkan jika tidak ada")
 
     st.subheader("Alamat Lengkap")
-    alamat = st.text_area("Alamat Rumah (Isi Lengkap)", value=val_alamat, placeholder="Jl Annaira RT.7 No.44 Tirto Utomo")
-    alamat_pengasuh = st.text_area("Alamat Pengasuh (Jika Ada)", value=val_alamat_pengasuh)
-    patokan = st.text_input("Catatan Tambahan Alamat (Patokan Lokasi)", value=val_patokan, placeholder="Samping Mesjid Al Karomah")
+    alamat = st.text_area("Alamat Rumah", value=default_data["alamat"], placeholder="Jl Annaira RT.7 No.44...")
+    alamat_pengasuh = st.text_area("Alamat Pengasuh (Jika Ada)", value=default_data["alamat pengasuh"])
+    patokan = st.text_input("Catatan Patokan Lokasi", value=default_data["patokan"], placeholder="Samping Mesjid Al Karomah")
 
     def tambah_data(baris_list, label, nilai):
         if nilai and str(nilai).strip() not in ["", "0", "None", "-- Pilih Kategori --"]:
