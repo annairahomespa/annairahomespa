@@ -240,12 +240,6 @@ with st.form("form_biodata"):
         st.write("**Dukungan & Harapan**")
         dukungan = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
         harapan = st.text_area("Apa harapan Bunda dari konsultasi/pijat ini?")
-        
-        c5, c6 = st.columns(2)
-        with c5:
-            rencana_pertemuan_2 = st.date_input("Rencana Tanggal Pertemuan Kedua", format="DD-MM-YYYY")
-        with c6:
-            jam_pertemuan_2 = st.selectbox("Jam Rencana Pertemuan Kedua", jam_operasional)
        
         st.subheader("✅ Informed Consent")
         st.write("Silakan centang persetujuan di bawah ini:")
@@ -272,7 +266,7 @@ with st.form("form_biodata"):
             f"Jenis Kelamin Anak: {jk_anak}\n"
             f"Jenis Persalinan: {jenis_persalinan}\n"
             f"ASI Saja: {asi_saja}\n"
-            f"IMD: {imd} ({imd_detail})\n"
+            f"IMD: ({imd_detail})\n"
             f"Izin Dokumentasi:\n {ringkasan_consent}\n"
         )
     else:
