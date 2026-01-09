@@ -132,6 +132,7 @@ val_usia_bunda = 25
 val_nama_anak = ""
 val_tgl_anak = datetime(2023, 1, 1)
 val_alamat = ""
+val_alamat_pengasuh =""
 val_patokan = ""
 val_ig = ""
 
@@ -150,6 +151,7 @@ if status_client == "Client Lama":
         val_nama_anak = user_data["nama_anak"]
         val_tgl_anak = datetime.strptime(user_data["tgl_lahir"], "%Y-%m-%d")
         val_alamat = user_data["alamat"]
+        val_alamat_pengasuh = user_data["alamat pengasuh"]
         val_patokan = user_data["patokan"]
         val_ig = user_data["instagram"]
 
@@ -176,6 +178,7 @@ with st.form("form_biodata"):
 
     st.subheader("Alamat Lengkap")
     alamat = st.text_area("Alamat Rumah (Isi Lengkap)", value=val_alamat, placeholder="Jl Annaira RT.7 No.44 Tirto Utomo")
+    alamat_pengasuh = st.text_area("Alamat Pengasuh (Jika Ada)", value=val_alamat_pengasuh)
     patokan = st.text_input("Catatan Tambahan Alamat (Patokan Lokasi)", value=val_patokan, placeholder="Samping Mesjid Al Karomah")
 
     def tambah_data(baris_list, label, nilai):
@@ -371,6 +374,7 @@ with st.form("form_biodata"):
                 f"*Keluhan/Kondisi:* {fix_kondisi}\n\n"
                 f"*Alamat Lengkap:*\n"
                 f"{alamat}\n"
+                f"{alamat_pengasuh}\n"
                 f"Patokan: {patokan}\n"
                 f"{detail_konsultasi_wa}"
             )
