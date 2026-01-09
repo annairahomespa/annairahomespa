@@ -204,7 +204,7 @@ with st.form("form_biodata"):
             tempat_persalinan = st.text_input("Tempat Persalinan (RS/Klinik/Rumah)")
             # rencana_persalinan = st.text_input("Rencana Persalinan (jika sedang hamil)")
 
-        imd_detail = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan?") if imd == "Iya" else ""
+        imd_detail = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan?")
         
         rawat_gabung = st.radio("Apakah setelah persalinan Bayi rawat gabung dengan Bunda?", ["Iya", "Tidak"])
         kondisi_bayi = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan?")
@@ -223,10 +223,19 @@ with st.form("form_biodata"):
         konsul_sebelumnya = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi?", ["Pernah", "Belum Pernah"])
         masalah_lain = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan")
 
+        options = [
+                "Persalinan Lama", "Sectio Caesarea", "Hipertensi", 
+                "Diabetes Melitus", "Penyakit Tiroid", "Obesitas", 
+                "Pcos", "Tidak Semua"
+            ]
+
         st.markdown("---")
-        st.write("**Riwayat Medis**")
-        st.radio(["Persalinan Lama", "Sectio Caesarea", "Hipertensi", "Diabetes Melitus", "Penyakit Tiroid", "Obesitas", "Pcos", "Tidak Semua"])
-        
+        st.write("**Riwayat kondisi kesehatan:**")
+        hasil_pilihan = {}
+
+        for option in options:
+            hasil_pilihan[option] = st.checkbox(option)
+            
         st.markdown("---")
         st.write("**Dukungan & Harapan**")
         dukungan = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
