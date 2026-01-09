@@ -198,7 +198,7 @@ with st.form("form_biodata"):
         
         c3, c4 = st.columns(2)
         with c3:
-            jenis_persalinan = st.selectbox("Jenis Persalinan saat ini", ["Normal/Vagina", "SC (Sesar)", "Waterbirth", "Lainnya"])
+            jenis_persalinan = st.selectbox("Jenis Persalinan saat ini", ["Persalinan Normal", "Operasi SC (Sesar)"])
             usia_kehamilan_lahir = st.text_input("Usia Kehamilan (saat melahirkan)")
         with c4:
             tempat_persalinan = st.text_input("Tempat Persalinan (RS/Klinik/Rumah)")
@@ -229,25 +229,21 @@ with st.form("form_biodata"):
         st.write("**Dukungan & Harapan**")
         dukungan = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
         harapan = st.text_area("Apa harapan Bunda dari konsultasi/pijat ini?")
-        
-        c5, c6 = st.columns(2)
-        with c5:
-            rencana_pertemuan_2 = st.date_input("Rencana Tanggal Pertemuan Kedua", format="DD-MM-YYYY")
-        with c6:
-            jam_pertemuan_2 = st.selectbox("Jam Rencana Pertemuan Kedua", jam_operasional)
        
         st.subheader("✅ Informed Consent")
         st.write("Silakan centang persetujuan di bawah ini:")
         ic1 = st.checkbox("Saya memberikan izin dokumentasi foto/video selama perawatan untuk edukasi internal Annaira.")
         ic2 = st.checkbox("Saya memberikan izin dokumentasi foto/video untuk media promosi (Instagram, Tiktok, Brosur).")
         ic3 = st.checkbox("Saya memberikan izin dokumentasi foto/video (dengan catatan wajah ditutup).")
-        ic4 = st.checkbox("Saya menyetujui syarat & ketentuan layanan Annaira Homespa.")
+        ic4 = st.checkbox("Saya tidak memberikan izin dokumentasi foto/video.")
+        ic5 = st.checkbox("Saya menyetujui syarat & ketentuan layanan Annaira Homespa.")
 
         # Logika ringkasan izin dokumentasi
         consent_details = []
         consent_details.append(f"Poin 1 (Edukasi): {'SETUJU' if ic1 else 'TIDAK'}")
         consent_details.append(f"Poin 2 (Promosi): {'SETUJU' if ic2 else 'TIDAK'}")
         consent_details.append(f"Poin 3 (Tutup Wajah): {'SETUJU' if ic3 else 'TIDAK'}")
+        consent_details.append(f"Poin 4 (Tidak Setuju): {'Tidak Setuju untuk di Dokumentasi' if ic4 else 'Setuju'}")
         
         ringkasan_consent = "\n   - ".join(consent_details)
 
@@ -266,7 +262,7 @@ with st.form("form_biodata"):
         detail_konsultasi_wa = "Terima Kasih 🩶"
 
     # Tombol submit form
-    submitted = st.form_submit_button("📲 Siapkan Pesan WhatsApp")
+    submitted = st.form_submit_button("Siapkan Pesan WhatsApp")
 
     if submitted:
         # 1. CEK VALIDASI DASAR (Nama, Alamat, Kategori Utama)
@@ -284,7 +280,7 @@ with st.form("form_biodata"):
             st.error("❌ Mohon pilih Detail Treatment yang diinginkan!")
 
         # 4. CEK VALIDASI INFORMED CONSENT (Syarat No. 4 untuk Konsultasi)
-        elif "Konsultasi Menyusui" in kategori_layanan and not ic4: # Sesuaikan ic4 adalah checkbox S&K Bunda
+        elif "Konsultasi Menyusui" in kategori_layanan and not ic5: # Sesuaikan ic4 adalah checkbox S&K Bunda
             st.error("❌ Untuk layanan konsultasi, Anda harus menyetujui Syarat & Ketentuan layanan Annaira Homespa (Informed Consent).")
 
         # 5. JIKA SEMUA SUDAH OK
