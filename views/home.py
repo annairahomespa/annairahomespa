@@ -190,7 +190,8 @@ with st.form("form_biodata"):
     
     # Input khusus client baru
     if status_client == "**Client Baru**":
-        info_sumber = st.text_input("Bunda/Ayah tau annaira dari mana?")
+        info_opsi = ["-- Pilih Opsi --", "Instagram", "Tiktok", "Whatsapp", "Twitter", "Rekomendasi Teman", "Mencari Sendiri di Social Media"]
+        info_sumber = st.selectbox("Bunda/Ayah tau annaira dari mana?", info_opsi)
 
     st.subheader("Kondisi Khusus / Keluhan")
     opsi_kondisi = [
