@@ -51,7 +51,7 @@ with st.container(key="card_reservasi"):
                 
     with col2:
         jam_operasional = []
-        for jam in range(8, 18):
+        for jam in range(8, 19):
             jam_operasional.append(f"{jam:02d}:00")
             jam_operasional.append(f"{jam:02d}:15")
             jam_operasional.append(f"{jam:02d}:30")
