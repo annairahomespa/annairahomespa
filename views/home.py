@@ -125,16 +125,19 @@ status_client = st.radio("", ["**Client Baru**", "**Client Lama**"], horizontal=
 
 if status_client == "**Client Lama**":
     daftar_nama = sorted([c["nama_bunda"] for c in DATA_CLIENT])
-    search_nama = st.selectbox(
-        "Cari Nama Bunda/Ayah (Ketik untuk mencari):", 
-        options=[""] + daftar_nama
+    
+    search_nama_list = st.multiselect(
+        "Cari & Pilih Nama Bunda/Ayah:", 
+        options=daftar_nama,
+        max_selections=1,
+        placeholder="Ketik nama di sini..."
     )
     
-    if search_nama:
+    if search_nama_list:
+        search_nama = search_nama_list[0]
         user_match = next((item for item in DATA_CLIENT if item["nama_bunda"] == search_nama), None)
         if user_match:
             default_data.update(user_match)
-            # Konversi string tanggal ke objek datetime jika perlu
             if isinstance(default_data["tgl_lahir"], str):
                 default_data["tgl_lahir"] = datetime.strptime(default_data["tgl_lahir"], "%Y-%m-%d")
 
@@ -302,7 +305,7 @@ with st.form("form_biodata"):
         detail_konsultasi_wa = "Terima Kasih 🩶"
 
     # Tombol submit (masih dalam scope st.form utama)
-    submitted = st.form_submit_button("Siapkan Pesan WhatsApp")
+    submitted = st.form_submit_button("Preview Pesanan Bunda")
 
 if submitted:
     errors = []
@@ -378,7 +381,7 @@ if submitted:
         st.code(text_wa, language=None)
 
     # 3. Tombol Kirim yang mencolok (Paling Aman untuk Mobile)
-    st.link_button("KIRIM VIA WHATSAPP", url_wa, type="primary", use_container_width=True)
+    st.link_button("Konfirmasi Via Whatsapp ", url_wa, type="primary", use_container_width=True)
 
     # 4. Trigger otomatis (Opsional, letakkan di paling bawah)
     st.components.v1.html(f"""
