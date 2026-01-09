@@ -200,7 +200,10 @@ with st.form("form_biodata"):
         "Kolik/Kembung", "Diare", "Sembelit", "Payudara Bengkak", 
         "Sumbatan ASI", "Yang lain:"
     ]
-    kondisi = st.checkbox("Kondisi Saat Ini:", opsi_kondisi)
+    kondisi_terpilih = []
+    for kondisi in opsi_kondisi:
+        if st.checkbox(kondisi):
+            kondisi_terpilih.append(kondisi)
     keluhan_lain = st.text_input("Jika pilih 'Yang lain', sebutkan di sini:", placeholder="Kosongkan jika tidak ada")
 
     st.subheader("Alamat Lengkap")
@@ -213,7 +216,7 @@ with st.form("form_biodata"):
             baris_list.append(f"• {label}: {nilai}")
 
     def get_informed_consent():
-        st.subheader("✅ Informed Consent")
+        st.subheader("Informed Consent")
         st.write("Silakan centang persetujuan di bawah ini:")
         
         # Menggunakan dictionary untuk checkbox agar lebih ringkas
