@@ -4,14 +4,6 @@ from datetime import date
 import urllib.parse
 import os
 
-st.markdown("""
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-    """, unsafe_allow_html=True)
-
 def local_css(file_name):
     if os.path.exists(file_name):
         with open(file_name) as f:

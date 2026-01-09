@@ -20,6 +20,19 @@
     animation: pageTransition 0.8s ease-out;
 }
 
+.block-container {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+        
+        /* Menghilangkan header transparan bawaan Streamlit */
+header {
+    visibility: hidden;
+    height: 0px;
+}
+
 /* --- 2. KARTU PUTIH (CONTAINER & FORM) --- */
 /* config.toml tidak bisa mengatur shadow dan border-radius ini */
 .st-key-card_reservasi, div[data-testid="stForm"] {
