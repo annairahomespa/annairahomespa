@@ -125,7 +125,8 @@ with st.container(key="card_reservasi"):
         else:
             layanan_final = "-- Pilih Kategori --"
 
-status_client = st.radio("Status Client:", ["Client Baru", "Client Lama"], horizontal=True)
+st.markdown("### **Status Client:**")
+status_client = st.radio("",["**Client Baru**", "**Client Lama**"], horizontal=True, label_visibility="collapsed")
 
 # Variabel penampung data autofill
 val_nama_bunda = ""
@@ -137,7 +138,7 @@ val_alamat_pengasuh =""
 val_patokan = ""
 val_ig = ""
 
-if status_client == "Client Lama":
+if status_client == "**Client Lama**":
     daftar_nama = sorted([c["nama_bunda"] for c in DATA_CLIENT])
     search_nama = st.selectbox(
         "Cari Nama Bunda/Ayah (Ketik untuk mencari):", 
@@ -166,11 +167,11 @@ with st.form("form_biodata"):
         nama_anak = st.text_input("Nama Lengkap Anak", value=val_nama_anak)
         ig = st.text_input("Akun Instagram", value=val_ig, placeholder="annaira.homespa")
     with col4:
-        if status_client != "Client Lama":
+        if status_client != "**Client Lama**":
             tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=val_tgl_anak, format="DD-MM-YYYY")
         usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
     
-    if status_client != "Client Lama":
+    if status_client != "**Client Lama**":
         info = st.text_input("Bunda/Ayah tau annaira dari mana?")
 
     st.subheader("Kondisi Khusus / Keluhan")
@@ -337,8 +338,12 @@ with st.form("form_biodata"):
 
     if submitted:
         # 1. CEK VALIDASI DASAR (Nama, Alamat, Kategori Utama)
-        if not nama_bunda or not alamat or kategori_layanan == "-- Pilih Kategori --":
+        if not nama_bunda:
             st.error("❌ Mohon lengkapi Nama, Alamat, dan Pilih Layanan!")
+        elif not alamat:
+            st.error("❌ Mohon lengkapi Alamat")
+        elif kategori_layanan == "-- Pilih Kategori --":
+             st.error("❌ Mohon Pilih Layanan yang anda butuhkan!")
         
         # 2. CEK VALIDASI KOTA (Jika pilih 'Lainnya' tapi teks kosong)
         elif kota == "Lainnya" and not kota_lainnya:
@@ -362,7 +367,7 @@ with st.form("form_biodata"):
             fix_kota = kota_lainnya if kota == "Lainnya" else kota
             fix_kondisi = keluhan_lain if kondisi == "Yang lain:" else kondisi
 
-            if status_client == "Client Lama":
+            if status_client == "**Client Lama**":
                 display_tgl_anak = ""
                 display_info =""
             else:
