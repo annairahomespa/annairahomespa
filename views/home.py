@@ -235,6 +235,9 @@ with st.form("form_biodata"):
 
         for option in options:
             hasil_pilihan[option] = st.checkbox(option)
+
+        riwayat_kesehatan_terpilih = [key for key, val in hasil_pilihan.items() if val]
+        string_riwayat_kesehatan = ", ".join(riwayat_kesehatan_terpilih) if riwayat_kesehatan_terpilih else "Tidak ada"
             
         st.markdown("---")
         st.write("**Dukungan & Harapan**")
@@ -258,17 +261,52 @@ with st.form("form_biodata"):
         
         ringkasan_consent = "\n   - ".join(consent_details)
 
-        detail_konsultasi_wa = (
-            f"\n\n*DATA TAMBAHAN KONSULTASI*\n"
-            f"WA: {wa_bunda}\n"
-            f"Tgl Lahir Bunda: {tgl_lahir_bunda.strftime('%d-%m-%Y')}\n"
-            f"Anak Ke: {int(anak_ke)}\n"
-            f"Jenis Kelamin Anak: {jk_anak}\n"
-            f"Jenis Persalinan: {jenis_persalinan}\n"
-            f"ASI Saja: {asi_saja}\n"
-            f"IMD: ({imd_detail})\n"
-            f"Izin Dokumentasi:\n {ringkasan_consent}\n"
-        )
+        baris_data = []
+        baris_data.append("*📋 DATA TAMBAHAN KONSULTASI LAKTASI*")
+
+        # 3. Fungsi pembantu untuk menambah baris jika ada isinya
+        def tambah_data(label, nilai):
+            if nilai and str(nilai).strip() != "" and str(nilai).strip() != "0":
+                baris_data.append(f"• {label}: {nilai}")
+
+        # --- Mulai Memasukkan Data (Hanya yang diisi) ---
+        tambah_data("WA Bunda", wa_bunda)
+        tambah_data("Tgl Lahir Bunda", tgl_lahir_bunda.strftime('%d-%m-%Y'))
+        tambah_data("Pekerjaan", pekerjaan)
+        tambah_data("Anak Ke", anak_ke)
+        tambah_data("Tempat Lahir Anak", tempat_lahir_anak)
+        tambah_data("Jenis Kelamin", jk_anak)
+        tambah_data("Usia Nifas", usia_nifas)
+        tambah_data("Usia Hamil", usia_hamil)
+        
+        tambah_data("Riwayat Menyusui Sblmnya", riwayat_sebelumnya)
+        tambah_data("Riwayat Kehamilan Sekarang", riwayat_sekarang)
+        tambah_data("Jenis Persalinan", jenis_persalinan)
+        tambah_data("Usia Hamil Saat Lahir", usia_kehamilan_lahir)
+        tambah_data("Tempat Persalinan", tempat_persalinan)
+        tambah_data("Detail IMD", imd_detail)
+        tambah_data("Rawat Gabung", rawat_gabung)
+        tambah_data("Kondisi Bayi", kondisi_bayi)
+        
+        tambah_data("Penggunaan Dot", dot_detail)
+        tambah_data("Nutrisi ASI Saja", asi_saja)
+        tambah_data("Rincian BB Bayi", bb_bayi)
+        
+        tambah_data("Kebiasaan Pompa", kebiasaan_pompa)
+        tambah_data("ASI Booster", asi_booster)
+        tambah_data("Konsul Sblmnya", konsul_sebelumnya)
+        tambah_data("Masalah Lain", masalah_lain)
+        
+        tambah_data("Riwayat Medis", string_riwayat_kesehatan)
+        tambah_data("Dukungan Keluarga", dukungan)
+        tambah_data("Harapan", harapan)
+
+        # Tambahkan bagian izin dokumentasi (biasanya ini tetap dimunculkan)
+        baris_data.append(f"\n*Izin Dokumentasi:*\n{ringkasan_consent}")
+        baris_data.append(f"• Setuju S&K: {'YA' if ic5 else 'TIDAK'}")
+
+        # 4. Gabungkan semua menjadi satu string
+        detail_konsultasi_wa = "\n".join(baris_data)
     else:
         detail_konsultasi_wa = "Terima Kasih 🩶"
 
