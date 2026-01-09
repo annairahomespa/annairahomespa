@@ -4,3 +4,6 @@ backgroundColor = "#EFEAE6"
 secondaryBackgroundColor = "#FCFCFC"
 textColor = "#604F3B"
 font = "Nunito"
+
+[client]
+toolbarMode = "hidden"
