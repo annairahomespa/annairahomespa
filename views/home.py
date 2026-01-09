@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime
+from datetime import date
 import urllib.parse
 import os
 
@@ -243,7 +244,7 @@ with st.form("form_biodata"):
         with col1:
             data = {
                 "WA Bunda": st.text_input("Nomor HP Bunda (WhatsApp)"),
-                "Tgl Lahir Bunda": st.date_input("Tanggal Lahir Bunda", format="DD-MM-YYYY"),
+                "Tgl Lahir Bunda": st.date_input("Tanggal Lahir Bunda", value=date(1990, 1, 1), min_value=date(1945, 1, 1), max_value=date.today(), format="DD-MM-YYYY"),
                 "Pekerjaan": st.text_input("Pekerjaan Bunda"),
                 "Anak Ke": st.number_input("Ananda merupakan anak ke berapa?", min_value=1, step=1)
             }
