@@ -305,8 +305,7 @@ with st.form("form_biodata"):
         for label, nilai in data_laktasi.items():
             tambah_data(baris, label, nilai)
         
-        baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
-        baris.append(f"• Setuju S&K: {'YA' if ic5 else 'TIDAK'}")
+        baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}\n   - Setuju S&K layanan Annaira Homespa: {'YA' if ic5 else 'TIDAK'}\n")
         detail_konsultasi_wa = "\n".join(baris)
 
     elif "Mom & Baby (Special Package)" in kategori_layanan:
@@ -326,7 +325,7 @@ with st.form("form_biodata"):
         tambah_data(baris, "Jenis Persalinan", persalinan)
         tambah_data(baris, "Jam Rencana Pertemuan Ke-2", jam_operasional)
         tambah_data(baris, "Rencana Tgl Ke-2", rencana_tgl)
-        baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
+        baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}\n   - Setuju S&K layanan Annaira Homespa: {'YA' if ic5 else 'TIDAK'}\n")
         detail_konsultasi_wa = "\n".join(baris)
 
     else:
@@ -388,7 +387,7 @@ if submitted:
         f"• Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
         f"• Anak: {nama_anak} ({usia_anak_saat_ini})\n"
         f"• Instagram: {ig}\n"
-        f"{info_tambahan}\n\n"
+        f"{info_tambahan}\n"
         
         f"*KONDISI & ALAMAT*\n"
         f"• Keluhan: {fix_kondisi}\n"
