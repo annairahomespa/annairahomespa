@@ -163,10 +163,11 @@ with st.form("form_biodata"):
     col3, col4 = st.columns(2)
     with col3:
         nama_anak = st.text_input("Nama Lengkap Anak", value=val_nama_anak)
-        tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=val_tgl_anak, format="DD-MM-YYYY")
-    with col4:
-        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
         ig = st.text_input("Akun Instagram", value=val_ig, placeholder="annaira.homespa")
+    with col4:
+        if status_client != "Client Lama":
+            tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=val_tgl_anak, format="DD-MM-YYYY")
+        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
 
     st.subheader("🩺 Kondisi Khusus / Keluhan")
     kondisi = st.radio(
