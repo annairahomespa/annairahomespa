@@ -182,7 +182,6 @@ with st.form("form_biodata"):
             usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
         
         with col4:
-            # Gunakan get() agar aman jika key tidak ada
             tgl_anak = default_data.get("tgl_lahir", datetime.now())
             tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=tgl_anak, format="DD-MM-YYYY")
             ig = st.text_input("Akun Instagram", value=default_data["instagram"])
@@ -201,7 +200,7 @@ with st.form("form_biodata"):
         "Kolik/Kembung", "Diare", "Sembelit", "Payudara Bengkak", 
         "Sumbatan ASI", "Yang lain:"
     ]
-    kondisi = st.radio("Kondisi Saat Ini:", opsi_kondisi)
+    kondisi = st.checkbox("Kondisi Saat Ini:", opsi_kondisi)
     keluhan_lain = st.text_input("Jika pilih 'Yang lain', sebutkan di sini:", placeholder="Kosongkan jika tidak ada")
 
     st.subheader("Alamat Lengkap")
