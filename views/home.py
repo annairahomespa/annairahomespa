@@ -339,7 +339,7 @@ with st.form("form_biodata"):
             st.error("❌ Mohon pilih Detail Treatment yang diinginkan!")
 
         # 4. CEK VALIDASI INFORMED CONSENT (Syarat No. 4 untuk Konsultasi)
-        elif "Konsultasi Menyusui" in kategori_layanan and "Mom & Baby (Special Package)" in kategori_layanan and not ic5: # Sesuaikan ic5 adalah checkbox S&K Bunda
+        elif "Konsultasi Menyusui" in kategori_layanan or "Mom & Baby (Special Package)" in kategori_layanan and not ic5: # Sesuaikan ic5 adalah checkbox S&K Bunda
             st.error("❌ Untuk layanan konsultasi, Anda harus menyetujui Syarat & Ketentuan layanan Annaira Homespa (Informed Consent).")
 
         # 5. JIKA SEMUA SUDAH OK
