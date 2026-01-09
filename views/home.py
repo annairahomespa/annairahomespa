@@ -257,38 +257,38 @@ with st.form("form_biodata"):
 
         st.markdown("---")
         st.subheader("Riwayat & Kebiasaan")
-        data["Riwayat Menyusui"] = st.text_area("Ceritakan riwayat menyusui sebelumnya")
-        data["Riwayat Kehamilan"] = st.text_area("Riwayat kehamilan dan persalinan saat ini")
+        data["riwayat menyusui sebelumnya"] = st.text_area("Ceritakan riwayat menyusui sebelumnya")
+        data["Riwayat kehamilan dan persalinan saat ini"] = st.text_area("Riwayat kehamilan dan persalinan saat ini")
         data["Jenis Persalinan"] = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC (Sesar)"])
         data["Tempat Persalinan"] = st.text_input("Tempat Persalinan (RS/Klinik/Rumah)")
         data["Usia Kehamilan"] = st.text_input("Usia Kehamilan (saat melahirkan)")
-        data["IMD"] = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan?")
-        data["Rawat Gabung"] = st.radio("Apakah setelah persalinan Bayi rawat gabung dengan Bunda?", ["Iya", "Tidak"])
-        data["Kondisi Bayi"] = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan?")
+        data["Bunda dan Bayi melakukan IMD segera setelah persalinan"] = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan?")
+        data["Setelah persalinan Bayi rawat gabung dengan Bunda"] = st.radio("Apakah setelah persalinan Bayi rawat gabung dengan Bunda?", ["Iya", "Tidak"])
+        data["Kondisi kesehatan bayi setelah dilahirkan"] = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan?")
 
         st.markdown("---")
         st.subheader("Kebiasaan & Nutrisi Bayi")
-        data["Dot"] = st.text_area("Apakah bayi pernah menggunakan dot?, sejak kapan dan ceritakan kronologisnya")
-        data["ASI"] = st.text_area("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?")
+        data["Bayi pernah menggunakan dot"] = st.text_area("Apakah bayi pernah menggunakan dot?, sejak kapan dan ceritakan kronologisnya")
+        data["Bayi mengkonsumsi ASI atau nutrisi lain"] = st.text_area("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?")
         data["Rincian BB"] = st.text_area("Rincian BB (berat badan) bayi tiap bulannya (Lahir - Sekarang)")
 
         st.markdown("---")
         st.subheader("Manajemen Laktasi Bunda")
-        data["Kebiasaan Bunda"] = st.text_area("Bagaimana kebiasaan Bunda dan hasilnya dalam proses memompa ASI?")
-        data["ASI Booster"] = st.text_area("Apakah Bunda mengkonsumsi ASI booster? Merk apa saja?")
-        data["Konsultasi Laktasi"] = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi?", ["Pernah", "Belum Pernah"])
-        data["Masalah Menyusui"] = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan")
+        data["Kebiasaan Bunda dan hasilnya dalam proses memompa ASI"] = st.text_area("Bagaimana kebiasaan Bunda dan hasilnya dalam proses memompa ASI?")
+        data["Bunda mengkonsumsi ASI booster?"] = st.text_area("Apakah Bunda mengkonsumsi ASI booster? Merk apa saja?")
+        data["Bunda pernah melakukan konsultasi laktasi"] = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi?", ["Pernah", "Belum Pernah"])
+        data["Masalah menyusui Bunda yang belum terjabarkan"] = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan")
         
         st.markdown("---")
         st.subheader("Riwayat Kondisi Kesehatan")
         options_medis = ["Persalinan Lama", "Sectio Caesarea", "Hipertensi", "Diabetes Melitus", "Penyakit Tiroid", "Obesitas", "PCOS", "Tidak Semua"]
         riwayat_medis = [opt for opt in options_medis if st.checkbox(opt)]
-        data["Riwayat Medis"] = ", ".join(riwayat_medis) if riwayat_medis else "Tidak Ada"
+        data["Riwayat Kondisi Kesehatan"] = ", ".join(riwayat_medis) if riwayat_medis else "Tidak Ada"
 
         st.markdown("---")
         st.subheader("Dukungan & Harapan")
-        data["Dukungan Keluarga"] = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
-        data["Harapan"] = st.text_area("Apa harapan Bunda dari konsultasi/pijat ini?")
+        data["Dukungan suami/keluarga agar Bunda sukses menyusui"] = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
+        data["Harapan Bunda dari konsultasi ini"] = st.text_area("Apa harapan Bunda dari konsultasi ini?")
 
         return data
 
@@ -323,8 +323,8 @@ with st.form("form_biodata"):
         tambah_data(baris, "Usia Nifas (bila nifas)", nifas)
         tambah_data(baris, "Usia Kehamilan (jika hamil)", hamil)
         tambah_data(baris, "Jenis Persalinan", persalinan)
-        tambah_data(baris, "Jam Rencana Pertemuan Ke-2", jam_operasional)
         tambah_data(baris, "Rencana Tgl Ke-2", rencana_tgl)
+        tambah_data(baris, "Jam Rencana Pertemuan Ke-2", jam_operasional)
         baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}\n   - Setuju S&K layanan Annaira Homespa: {'YA' if ic5 else 'TIDAK'}\n")
         detail_konsultasi_wa = "\n".join(baris)
 
