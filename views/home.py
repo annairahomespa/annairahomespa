@@ -79,7 +79,7 @@ LAYANAN_DATA = {
 def get_jam_operasional():
     return [f"{jam:02d}:{menit:02d}" for jam in range(8, 19) for menit in [0, 15, 30, 45]]
 
-st.title("Annaira Home Spa 🩶")
+st.header("Annaira Home Spa")
 st.write("Selamat datang, Bunda/Ayah. Terimakasih telah menghubungi Annaira 🤗\n\n"
          "Silahkan isi formulir berikut dengan data yang lengkap dan sesuai kondisi yaa")
 
