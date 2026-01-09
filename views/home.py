@@ -174,42 +174,52 @@ with st.form("form_biodata"):
     st.subheader("Data Orang Tua & Anak")
     
     if status_client == "**Client Baru**":
-        usia_bunda = st.number_input("Usia Bunda", 12, 80, value=default_data["usia_bunda"])
+        nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=default_data["nama_bunda"], placeholder="Tulis di sini...")
+        usia_bunda = st.number_input("Usia Bunda", 12, 80, value=default_data["usia_bunda"], placeholder="Tulis di sini...")
     
         col3, col4 = st.columns(2)
         with col3:
-            nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"])
-            usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
+            nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"], placeholder="Tulis di sini...")
+            usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini", placeholder="Tulis di sini...")
         
         with col4:
             tgl_anak = default_data.get("tgl_lahir", datetime.now())
             tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=tgl_anak, format="DD-MM-YYYY")
-            ig = st.text_input("Akun Instagram", value=default_data["instagram"])
+            ig = st.text_input("Akun Instagram", value=default_data["instagram"], placeholder="Tulis di sini...")
     
         info_opsi = ["-- Pilih Opsi --", "Instagram", "Tiktok", "Whatsapp", "Twitter", "Rekomendasi Teman", "Mencari Sendiri di Social Media"]
         info_sumber = st.selectbox("Bunda/Ayah tau annaira dari mana?", info_opsi)
     
     else:
-        nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=default_data["nama_bunda"])
-        nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"])
-        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
+        nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=default_data["nama_bunda"], placeholder="Tulis di sini...")
+        nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"], placeholder="Tulis di sini...")
+        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini", placeholder="Tulis di sini...")
 
     st.subheader("Kondisi Khusus / Keluhan")
     opsi_kondisi = [
         "Tidak Ada", "Alergi Minyak", "Sedang Demam", "Batuk Pilek", 
         "Kolik/Kembung", "Diare", "Sembelit", "Payudara Bengkak", 
-        "Sumbatan ASI", "Yang lain:"
+        "Sumbatan ASI"
     ]
-    kondisi_terpilih = []
-    for kondisi in opsi_kondisi:
-        if st.checkbox(kondisi):
-            kondisi_terpilih.append(kondisi)
-    keluhan_lain = st.text_input("Jika pilih 'Yang lain', sebutkan di sini:", placeholder="Kosongkan jika tidak ada")
+    col1, col2 = st.columns(2)
+    pilihan_user = []
+
+    for i, opsi in enumerate(opsi_kondisi):
+        with col1 if i % 2 == 0 else col2:
+            if st.checkbox(opsi, key=opsi):
+                pilihan_user.append(opsi)
+
+    input_lain = st.text_input("Sebutkan keluhan lain:", placeholder="Tulis di sini...")
+    if input_lain:
+        pilihan_user.append(input_lain)
+    if "Tidak Ada" in pilihan_user and len(pilihan_user) > 1:
+        pilihan_user.remove("Tidak Ada")
+    fix_kondisi = ", ".join(pilihan_user) if pilihan_user else "-"
 
     st.subheader("Alamat Lengkap")
-    alamat = st.text_area("Alamat Rumah", value=default_data["alamat"], placeholder="Jl Annaira RT.7 No.44...")
-    alamat_pengasuh = st.text_area("Alamat Pengasuh (Jika Ada)", value=default_data["alamat pengasuh"])
-    patokan = st.text_input("Catatan Patokan Lokasi", value=default_data["patokan"], placeholder="Samping Mesjid Al Karomah")
+    alamat = st.text_area("Alamat Rumah", value=default_data["alamat"], placeholder="Tulis di sini...")
+    alamat_pengasuh = st.text_area("Alamat Pengasuh (Jika Ada)", value=default_data["alamat pengasuh"], placeholder="Tulis di sini...")
+    patokan = st.text_input("Catatan Patokan Lokasi", value=default_data["patokan"], placeholder="Tulis di sini...")
 
     def tambah_data(baris_list, label, nilai):
         if nilai and str(nilai).strip() not in ["", "0", "None", "-- Pilih Kategori --"]:
@@ -386,14 +396,15 @@ if submitted:
 
     # 2. Pengolahan Data Final
     fix_kota = kota_final if kota == "Lainnya" else kota
-    fix_kondisi = keluhan_lain if kondisi == "Yang lain:" else kondisi
     
     # Logic data tambahan berdasarkan status client
     info_tambahan = ""
     if status_client != "**Client Lama**":
         info_tambahan = (
-            f"Tgl Lahir Anak: {tgl_lahir_anak.strftime('%d-%m-%Y')}\n"
-            f"Info tau Annaira: {info_sumber}\n\n"
+            f"• Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
+            f"• Tgl Lahir Anak: {tgl_lahir_anak.strftime('%d-%m-%Y')}\n"
+            f"• Instagram: {ig}\n"
+            f"• Info tau Annaira: {info_sumber}\n\n"
         )
 
     # 3. Menyusun Template Pesan (Clean Multiline String)
@@ -408,9 +419,8 @@ if submitted:
         f"• Detail Layanan: {layanan_final}\n\n"
         
         f"*DATA CLIENT*\n"
-        f"• Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
+        f"• Bunda/Ayah: {nama_bunda}\n"
         f"• Anak: {nama_anak} ({usia_anak_saat_ini})\n"
-        f"• Instagram: {ig}\n"
         f"{info_tambahan}\n"
         
         f"*KONDISI & ALAMAT*\n"
