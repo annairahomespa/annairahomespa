@@ -168,6 +168,9 @@ with st.form("form_biodata"):
         if status_client != "Client Lama":
             tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=val_tgl_anak, format="DD-MM-YYYY")
         usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
+    
+    if status_client != "Client Lama":
+        info = st.text_input("Bunda/Ayah tau annaira dari mana?")
 
     st.subheader("🩺 Kondisi Khusus / Keluhan")
     kondisi = st.radio(
@@ -372,6 +375,7 @@ with st.form("form_biodata"):
                 f"Tgl Lahir Anak: {tgl_lahir_anak.strftime('%d-%m-%Y')}\n"
                 f"Usia Anak: {usia_anak_saat_ini}\n"
                 f"Instagram: {ig}\n\n"
+                f"info: {info}\n\n"
                 f"*Keluhan/Kondisi:* {fix_kondisi}\n\n"
                 f"*Alamat Lengkap:*\n"
                 f"{alamat}\n"
