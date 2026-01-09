@@ -260,7 +260,7 @@ with st.form("form_biodata"):
         st.subheader("Riwayat & Kebiasaan")
         data["riwayat menyusui sebelumnya"] = st.text_area("Ceritakan riwayat menyusui sebelumnya")
         data["Riwayat kehamilan dan persalinan saat ini"] = st.text_area("Riwayat kehamilan dan persalinan saat ini")
-        data["Jenis Persalinan"] = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC (Sesar)"])
+        data["Jenis Persalinan"] = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC"])
         data["Tempat Persalinan"] = st.text_input("Tempat Persalinan (RS/Klinik/Rumah)")
         data["Usia Kehamilan"] = st.text_input("Usia Kehamilan (saat melahirkan)")
         data["Bunda dan Bayi melakukan IMD segera setelah persalinan"] = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan?")
@@ -309,13 +309,27 @@ with st.form("form_biodata"):
         baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}\n   - Setuju S&K layanan Annaira Homespa: {'YA' if ic5 else 'TIDAK'}\n")
         detail_konsultasi_wa = "\n".join(baris)
 
+    elif "Mom Treatment" in kategori_layanan:
+        st.divider()
+        st.subheader("Data Tambahan Mom Treatment")
+        
+        nifas = st.text_input("Usia Nifas (bila nifas)")
+        hamil = st.text_input("Usia Kehamilan (jika hamil)")
+        persalinan = st.selectbox("Rencana Persalinan", ["Persalinan Normal", "Operasi SC"])
+
+        baris = ["*Data Tambahan Mom Treatment*"]
+        tambah_data(baris, "Usia Nifas (bila nifas)", nifas)
+        tambah_data(baris, "Usia Kehamilan (jika hamil)", hamil)
+        tambah_data(baris, "Rencana Persalinan", persalinan)
+        detail_konsultasi_wa = "\n".join(baris)
+
     elif "Mom & Baby (Special Package)" in kategori_layanan:
         st.divider()
         st.subheader("Data Tambahan Mom & Baby")
         
         nifas = st.text_input("Usia Nifas (bila nifas)")
         hamil = st.text_input("Usia Kehamilan (jika hamil)")
-        persalinan = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC (Sesar)"])
+        persalinan = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC"])
         jam_operasional = st.selectbox("Jam Rencana Pertemuan Kedua", get_jam_operasional())
         rencana_tgl = st.date_input("Rencana Pertemuan Kedua", format="DD-MM-YYYY")
         ringkasan_consent, ic5 = get_informed_consent()
