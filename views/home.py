@@ -136,8 +136,12 @@ val_patokan = ""
 val_ig = ""
 
 if status_client == "Client Lama":
-    daftar_nama = [c["nama_bunda"] for c in DATA_CLIENT]
-    search_nama = st.selectbox("Cari Nama Bunda/Ayah:", [""] + daftar_nama)
+    daftar_nama = sorted([c["nama_bunda"] for c in DATA_CLIENT])
+    search_nama = st.selectbox(
+        "Cari Nama Bunda/Ayah (Ketik untuk mencari):", 
+        options=[""] + daftar_nama,
+        index=0
+    )
     
     if search_nama != "":
         user_data = next(item for item in DATA_CLIENT if item["nama_bunda"] == search_nama)
