@@ -302,7 +302,7 @@ with st.form("form_biodata"):
         ringkasan_consent, ic5 = get_informed_consent()
 
         # Susun Pesan WA
-        baris = ["*📋 DATA TAMBAHAN KONSULTASI LAKTASI*"]
+        baris = ["*DATA TAMBAHAN KONSULTASI LAKTASI*"]
         for label, nilai in data_laktasi.items():
             tambah_data(baris, label, nilai)
         
@@ -320,7 +320,7 @@ with st.form("form_biodata"):
         rencana_tgl = st.date_input("Rencana Pertemuan Kedua", format="DD-MM-YYYY")
         ringkasan_consent, ic5 = get_informed_consent()
 
-        baris = ["*📋 DATA TAMBAHAN MOM & BABY*"]
+        baris = ["*DATA TAMBAHAN MOM & BABY*"]
         tambah_data(baris, "Usia Nifas (bila nifas)", nifas)
         tambah_data(baris, "Usia Kehamilan (jika hamil)", hamil)
         tambah_data(baris, "Jenis Persalinan", persalinan)
@@ -333,7 +333,11 @@ with st.form("form_biodata"):
         detail_konsultasi_wa = "Terima Kasih 🩶"
 
     # Tombol submit (masih dalam scope st.form utama)
-    submitted = st.form_submit_button("Preview Pesanan Bunda")
+    submitted = st.form_submit_button("Preview Pesanan Bunda") 
+    st.write(
+    f'<span style="opacity: {0.7};">Jika ada perubahan data diatas, tekan tombol preview lagi ya untuk update data nya!</span>', 
+    unsafe_allow_html=True
+)
 
 if submitted:
     errors = []
