@@ -307,7 +307,7 @@ with st.form("form_biodata"):
         
         baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
         baris.append(f"• Setuju S&K: {'YA' if ic5 else 'TIDAK'}")
-        detail_konsultasi_wa = "\n".join(baris)
+        detail_konsultasi_wa = "\nTerima Kasih 🩶".join(baris)
 
     elif "Mom & Baby (Special Package)" in kategori_layanan:
         st.divider()
@@ -327,7 +327,7 @@ with st.form("form_biodata"):
         tambah_data(baris, "Jam Rencana Pertemuan Ke-2", jam_operasional)
         tambah_data(baris, "Rencana Tgl Ke-2", rencana_tgl)
         baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
-        detail_konsultasi_wa = "\n".join(baris)
+        detail_konsultasi_wa = "\nTerima Kasih 🩶".join(baris)
 
     else:
         detail_konsultasi_wa = "Terima Kasih 🩶"
@@ -382,13 +382,13 @@ if submitted:
         f"• Jam: {jam_operasional}\n"
         f"• Kota: {fix_kota}\n"
         f"• Layanan: {kategori_layanan}\n"
-        f"• Detail: {layanan_final}\n\n"
+        f"• Detail Layanan: {layanan_final}\n\n"
         
         f"*DATA CLIENT*\n"
         f"• Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
         f"• Anak: {nama_anak} ({usia_anak_saat_ini})\n"
         f"• Instagram: {ig}\n"
-        f"{info_tambahan}"
+        f"{info_tambahan}\n\n"
         
         f"*KONDISI & ALAMAT*\n"
         f"• Keluhan: {fix_kondisi}\n"
@@ -399,7 +399,6 @@ if submitted:
         f"{detail_konsultasi_wa}"
     )
 
-    # 4. Eksekusi Pengiriman
     # 1. Encode URL
     encoded_text = urllib.parse.quote(text_wa)
     url_wa = f"https://wa.me/6282255514392?text={encoded_text}"
