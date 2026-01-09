@@ -173,25 +173,27 @@ if status_client == "**Client Lama**":
 with st.form("form_biodata"):
     st.subheader("Data Orang Tua & Anak")
     
-    nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=default_data["nama_bunda"])
-    usia_bunda = st.number_input("Usia Bunda", 12, 80, value=default_data["usia_bunda"])
-    
-    col3, col4 = st.columns(2)
-    with col3:
-        nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"])
-        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
-        
-    with col4:
-        # Gunakan get() agar aman jika key tidak ada
-        tgl_anak = default_data.get("tgl_lahir", datetime.now())
-        if status_client == "**Client Baru**":
-            tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=tgl_anak, format="DD-MM-YYYY")
-        ig = st.text_input("Akun Instagram", value=default_data["instagram"])
-    
-    # Input khusus client baru
     if status_client == "**Client Baru**":
+        usia_bunda = st.number_input("Usia Bunda", 12, 80, value=default_data["usia_bunda"])
+    
+        col3, col4 = st.columns(2)
+        with col3:
+            nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"])
+            usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
+        
+        with col4:
+            # Gunakan get() agar aman jika key tidak ada
+            tgl_anak = default_data.get("tgl_lahir", datetime.now())
+            tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=tgl_anak, format="DD-MM-YYYY")
+            ig = st.text_input("Akun Instagram", value=default_data["instagram"])
+    
         info_opsi = ["-- Pilih Opsi --", "Instagram", "Tiktok", "Whatsapp", "Twitter", "Rekomendasi Teman", "Mencari Sendiri di Social Media"]
         info_sumber = st.selectbox("Bunda/Ayah tau annaira dari mana?", info_opsi)
+    
+    else:
+        nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=default_data["nama_bunda"])
+        nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"])
+        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
 
     st.subheader("Kondisi Khusus / Keluhan")
     opsi_kondisi = [
