@@ -212,8 +212,7 @@ with st.form("form_biodata"):
         
         st.markdown("---")
         st.write("**Kebiasaan & Nutrisi Bayi**")
-        pake_dot = st.radio("Apakah bayi pernah menggunakan dot?", ["Pernah", "Tidak Pernah"])
-        dot_detail = st.text_area("Jika pernah, sejak kapan dan ceritakan kronologisnya") if pake_dot == "Pernah" else ""
+        dot_detail = st.text_area("Apakah bayi pernah menggunakan dot?, sejak kapan dan ceritakan kronologisnya")
         
         asi_saja = st.radio("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?", ["ASI Saja", "ASI + Sufor/Lainnya"])
         bb_bayi = st.text_area("Rincian BB (berat badan) bayi tiap bulannya (Lahir - Sekarang)")
@@ -229,6 +228,12 @@ with st.form("form_biodata"):
         st.write("**Dukungan & Harapan**")
         dukungan = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
         harapan = st.text_area("Apa harapan Bunda dari konsultasi/pijat ini?")
+        
+        c5, c6 = st.columns(2)
+        with c5:
+            rencana_pertemuan_2 = st.date_input("Rencana Tanggal Pertemuan Kedua", format="DD-MM-YYYY")
+        with c6:
+            jam_pertemuan_2 = st.selectbox("Jam Rencana Pertemuan Kedua", jam_operasional)
        
         st.subheader("✅ Informed Consent")
         st.write("Silakan centang persetujuan di bawah ini:")
