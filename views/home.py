@@ -362,19 +362,27 @@ if submitted:
         f"*KONDISI & ALAMAT*\n"
         f"• Keluhan: {fix_kondisi}\n"
         f"• Alamat: {alamat}\n"
-        f"• Pengasuh: {alamat_pengasuh if alamat_pengasuh else '-'}\n"
+        f"• Alamat Pengasuh: {alamat_pengasuh if alamat_pengasuh else '-'}\n"
         f"• Patokan: {patokan}\n\n"
         
         f"{detail_konsultasi_wa}"
     )
 
     # 4. Eksekusi Pengiriman
+    # 1. Encode URL
     encoded_text = urllib.parse.quote(text_wa)
     url_wa = f"https://wa.me/6282255514392?text={encoded_text}"
 
-    st.success("✅ Data siap dikirim!")
-    st.balloons()
-    
-    # Redirect otomatis
-    st.markdown(f'<meta http-equiv="refresh" content="0;url={url_wa}">', unsafe_allow_html=True)
-    st.link_button("Klik di sini jika tidak otomatis ke WhatsApp", url_wa)
+    # 2. Tampilkan Preview untuk meyakinkan pengguna
+    with st.expander("🔍 Lihat Ringkasan Pesan", expanded=True):
+        st.code(text_wa, language=None)
+
+    # 3. Tombol Kirim yang mencolok (Paling Aman untuk Mobile)
+    st.link_button("KIRIM VIA WHATSAPP", url_wa, type="primary", use_container_width=True)
+
+    # 4. Trigger otomatis (Opsional, letakkan di paling bawah)
+    st.components.v1.html(f"""
+        <script>
+            window.parent.location.href = "{url_wa}";
+        </script>
+    """, height=0)
