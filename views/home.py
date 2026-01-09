@@ -98,7 +98,7 @@ with st.container(key="card_reservasi"):
             kota_final = st.text_input("Sebutkan Nama Kota/Kecamatan:", placeholder="Contoh: Kalua")
 
     with col2:
-        jam_res = st.selectbox("Jam Reservasi", get_jam_operasional())
+        jam_operasional = st.selectbox("Jam Reservasi", get_jam_operasional())
         
         kategori_layanan = st.selectbox("Pilih Kategori Layanan:", ["-- Pilih Kategori --"] + list(LAYANAN_DATA.keys()))
 
