@@ -182,212 +182,199 @@ with st.form("form_biodata"):
         st.subheader("✅ Informed Consent")
         st.write("Silakan centang persetujuan di bawah ini:")
         
-        ic1 = st.checkbox("Saya memberikan izin dokumentasi foto/video selama perawatan untuk edukasi internal Annaira.")
-        ic2 = st.checkbox("Saya memberikan izin dokumentasi foto/video untuk media promosi (Instagram, Tiktok, Brosur).")
-        ic3 = st.checkbox("Saya memberikan izin dokumentasi foto/video (dengan catatan wajah ditutup).")
-        ic4 = st.checkbox("Saya tidak memberikan izin dokumentasi foto/video.")
+        # Menggunakan dictionary untuk checkbox agar lebih ringkas
+        labels = {
+            "ic1": "Saya memberikan izin dokumentasi foto/video selama perawatan untuk edukasi internal Annaira.",
+            "ic2": "Saya memberikan izin dokumentasi foto/video untuk media promosi (Instagram, Tiktok, Brosur).",
+            "ic3": "Saya memberikan izin dokumentasi foto/video (dengan catatan wajah ditutup).",
+            "ic4": "Saya TIDAK memberikan izin dokumentasi foto/video.",
+        }
+        
+        checks = {key: st.checkbox(val) for key, val in labels.items()}
         ic5 = st.checkbox("Saya menyetujui syarat & ketentuan layanan Annaira Homespa.")
 
+        # Mapping hasil teks
         consent_list = []
-        if ic1: consent_list.append("Izin Edukasi Internal")
-        if ic2: consent_list.append("Izin Media Promosi")
-        if ic3: consent_list.append("Izin Dokumentasi (Wajah Ditutup)")
-        if ic4: consent_list.append("TIDAK MEMBERIKAN IZIN DOKUMENTASI")
-        
-        ringkasan = "\n   - ".join(consent_list) if consent_list else "Tidak ada poin dokumentasi yang dipilih"
+        if checks["ic1"]: consent_list.append("Saya memberikan izin dokumentasi foto/video selama perawatan untuk edukasi internal Annaira.")
+        if checks["ic2"]: consent_list.append("Saya memberikan izin dokumentasi foto/video untuk media promosi (Instagram, Tiktok, Brosur).")
+        if checks["ic3"]: consent_list.append("Saya memberikan izin dokumentasi foto/video (dengan catatan wajah ditutup).")
+        if checks["ic4"]: consent_list.append("Saya TIDAK memberikan izin dokumentasi foto/video.")
+
+        ringkasan = "\n   - ".join(consent_list) if consent_list else "Tidak ada poin dipilih"
         return ringkasan, ic5
 
+    def render_laktasi_form():
+        st.divider()
+        st.subheader("Data Tambahan Konsultasi Laktasi")
+        st.info("Mohon lengkapi riwayat medis berikut.")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            data = {
+                "WA Bunda": st.text_input("Nomor HP Bunda (WhatsApp)"),
+                "Tgl Lahir Bunda": st.date_input("Tanggal Lahir Bunda", format="DD-MM-YYYY"),
+                "Pekerjaan": st.text_input("Pekerjaan Bunda"),
+                "Anak Ke": st.number_input("Ananda merupakan anak ke berapa?", min_value=1, step=1)
+            }
+        with col2:
+            data.update({
+                "Tempat Lahir Anak": st.text_input("Tempat Lahir Anak"),
+                "Jenis Kelamin Anak": st.selectbox("Jenis Kelamin Anak", ["Laki-laki", "Perempuan"]),
+                "Usia Nifas": st.text_input("Usia Nifas (bila nifas)"),
+                "Usia Kehamilan": st.text_input("Usia Kehamilan (jika hamil)")
+            })
+
+        st.markdown("---")
+        st.subheader("Riwayat & Kebiasaan")
+        data["Riwayat Menyusui"] = st.text_area("Ceritakan riwayat menyusui sebelumnya")
+        data["Riwayat Kehamilan"] = st.text_area("Riwayat kehamilan dan persalinan saat ini")
+        data["Jenis Persalinan"] = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC (Sesar)"])
+        data["Tempat Persalinan"] = st.text_input("Tempat Persalinan (RS/Klinik/Rumah)")
+        data["Usia Kehamilan"] = st.text_input("Usia Kehamilan (saat melahirkan)")
+        data["IMD"] = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan?")
+        data["Rawat Gabung"] = st.radio("Apakah setelah persalinan Bayi rawat gabung dengan Bunda?", ["Iya", "Tidak"])
+        data["Kondisi Bayi"] = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan?")
+
+        st.markdown("---")
+        st.subheader("Kebiasaan & Nutrisi Bayi")
+        data["Dot"] = st.text_area("Apakah bayi pernah menggunakan dot?, sejak kapan dan ceritakan kronologisnya")
+        data["ASI"] = st.text_area("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?")
+        data["Rincian BB"] = st.text_area("Rincian BB (berat badan) bayi tiap bulannya (Lahir - Sekarang)")
+
+        st.markdown("---")
+        st.subheader("Manajemen Laktasi Bunda")
+        data["Kebiasaan Bunda"] = st.text_area("Bagaimana kebiasaan Bunda dan hasilnya dalam proses memompa ASI?")
+        data["ASI Booster"] = st.text_area("Apakah Bunda mengkonsumsi ASI booster? Merk apa saja?")
+        data["Konsultasi Laktasi"] = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi?", ["Pernah", "Belum Pernah"])
+        data["Masalah Menyusui"] = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan")
+        
+        st.markdown("---")
+        st.subheader("Riwayat Kondisi Kesehatan")
+        options_medis = ["Persalinan Lama", "Sectio Caesarea", "Hipertensi", "Diabetes Melitus", "Penyakit Tiroid", "Obesitas", "PCOS", "Tidak Semua"]
+        riwayat_medis = [opt for opt in options_medis if st.checkbox(opt)]
+        data["Riwayat Medis"] = ", ".join(riwayat_medis) if riwayat_medis else "Tidak Ada"
+
+        st.markdown("---")
+        st.subheader("Dukungan & Harapan")
+        data["Dukungan Keluarga"] = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
+        data["Harapan"] = st.text_area("Apa harapan Bunda dari konsultasi/pijat ini?")
+
+        return data
+
+    # --- 3. MAIN LOGIC ---
     detail_konsultasi_wa = ""
 
     if "Konsultasi Menyusui" in kategori_layanan:
-        st.divider()
-        st.subheader("Data Tambahan Konsultasi Laktasi")
-        st.info("Mohon lengkapi riwayat medis berikut untuk memaksimalkan sesi konsultasi.")
-        
-        c1, c2 = st.columns(2)
-        with c1:
-            wa_bunda = st.text_input("Nomor HP Bunda (WhatsApp)")
-            tgl_lahir_bunda = st.date_input("Tanggal Lahir Bunda", format="DD-MM-YYYY")
-            pekerjaan = st.text_input("Pekerjaan Bunda")
-            anak_ke = st.number_input("Ananda merupakan anak ke berapa?", min_value=1, step=1)
-        with c2:
-            tempat_lahir_anak = st.text_input("Tempat Lahir Anak")
-            jk_anak = st.selectbox("Jenis Kelamin Anak", ["Laki-laki", "Perempuan"])
-            usia_nifas = st.text_input("Usia Nifas (bila nifas)")
-            usia_hamil = st.text_input("Usia Kehamilan (jika hamil)")
-
-        st.markdown("---")
-        st.subheader("Riwayat Kehamilan & Persalinan")
-        riwayat_sebelumnya = st.text_area("Ceritakan riwayat menyusui anak sebelumnya")
-        riwayat_sekarang = st.text_area("Riwayat kehamilan dan persalinan saat ini")
-        
-        c3, c4 = st.columns(2)
-        with c3:
-            jenis_persalinan = st.selectbox("Jenis Persalinan saat ini", ["Persalinan Normal", "Operasi SC (Sesar)"])
-            usia_kehamilan_lahir = st.text_input("Usia Kehamilan (saat melahirkan)")
-        with c4:
-            tempat_persalinan = st.text_input("Tempat Persalinan (RS/Klinik/Rumah)")
-
-        imd_detail = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan?")
-        rawat_gabung = st.radio("Apakah setelah persalinan Bayi rawat gabung dengan Bunda?", ["Iya", "Tidak"])
-        kondisi_bayi = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan?")
-        
-        st.markdown("---")
-        st.subheader("Kebiasaan & Nutrisi Bayi")
-        dot_detail = st.text_area("Apakah bayi pernah menggunakan dot?, sejak kapan dan ceritakan kronologisnya")
-        asi_saja = st.text_area("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?")
-        bb_bayi = st.text_area("Rincian BB (berat badan) bayi tiap bulannya (Lahir - Sekarang)")
-        
-        st.markdown("---")
-        st.subheader("Manajemen Laktasi Bunda")
-        kebiasaan_pompa = st.text_area("Bagaimana kebiasaan Bunda dan hasilnya dalam proses memompa ASI?")
-        asi_booster = st.text_area("Apakah Bunda mengkonsumsi ASI booster? Merk apa saja?")
-        konsul_sebelumnya = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi?", ["Pernah", "Belum Pernah"])
-        masalah_lain = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan")
-
-        options_medis = ["Persalinan Lama", "Sectio Caesarea", "Hipertensi", "Diabetes Melitus", "Penyakit Tiroid", "Obesitas", "Pcos", "Tidak Semua"]
-        st.subheader("Riwayat kondisi kesehatan:")
-        hasil_pilihan = {opt: st.checkbox(opt) for opt in options_medis}
-        
-        st.markdown("---")
-        st.subheader("Dukungan & Harapan")
-        dukungan = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
-        harapan = st.text_area("Apa harapan Bunda dari konsultasi/pijat ini?")
-
+        # Render form dan ambil datanya
+        data_laktasi = render_laktasi_form()
         ringkasan_consent, ic5 = get_informed_consent()
 
-        # --- PROSES RINGKASAN DATA ---
-        baris_data = ["*📋 DATA TAMBAHAN KONSULTASI LAKTASI*"]
+        # Susun Pesan WA
+        baris = ["*📋 DATA TAMBAHAN KONSULTASI LAKTASI*"]
+        for label, nilai in data_laktasi.items():
+            tambah_data(baris, label, nilai)
         
-        tambah_data(baris_data, "WA Bunda", wa_bunda)
-        tambah_data(baris_data, "Pekerjaan", pekerjaan)
-        tambah_data(baris_data, "Anak Ke", anak_ke)
-        tambah_data(baris_data, "Jenis Kelamin Anak", jk_anak)
-        tambah_data(baris_data, "Usia Nifas", usia_nifas)
-        tambah_data(baris_data, "Usia Kehamilan", usia_hamil)
-        
-        tambah_data(baris_data, "Riwayat Menyusui Sblmnya", riwayat_sebelumnya)
-        tambah_data(baris_data, "Riwayat Kehamilan Saat Ini", riwayat_sekarang)
-        tambah_data(baris_data, "Jenis Persalinan", jenis_persalinan)
-        tambah_data(baris_data, "IMD", imd_detail)
-        tambah_data(baris_data, "Rawat Gabung", rawat_gabung)
-        
-        tambah_data(baris_data, "Nutrisi ASI Saja", asi_saja)
-        tambah_data(baris_data, "BB Bayi", bb_bayi)
-        tambah_data(baris_data, "Masalah Lain", masalah_lain)
-
-        # Masukkan Riwayat Medis dari Checkbox
-        riwayat_terpilih = [k for k, v in hasil_pilihan.items() if v]
-        if riwayat_terpilih:
-            tambah_data(baris_data, "Riwayat Medis", ", ".join(riwayat_terpilih))
-
-        tambah_data(baris_data, "Dukungan Keluarga", dukungan)
-        tambah_data(baris_data, "Harapan", harapan)
-
-        baris_data.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
-        baris_data.append(f"• Setuju S&K: {'YA' if ic5 else 'TIDAK'}")
-
-        detail_konsultasi_wa = "\n".join(baris_data)
+        baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
+        baris.append(f"• Setuju S&K: {'YA' if ic5 else 'TIDAK'}")
+        detail_konsultasi_wa = "\n".join(baris)
 
     elif "Mom & Baby (Special Package)" in kategori_layanan:
         st.divider()
         st.subheader("Data Tambahan Mom & Baby")
-        usia_nifas = st.text_input("Usia Nifas (bila nifas)")
-        usia_kehamilan = st.text_input("Usia Kehamilan (jika hamil)")
-        rencana_persalinan = st.selectbox("Rencana Persalinan", ["Persalinan Normal", "Operasi SC (Sesar)"])
-
-        c1, c2 = st.columns(2)
-        with c1:
-            rencana_pertemuan_2 = st.date_input("Rencana Tanggal Pertemuan Kedua", format="DD-MM-YYYY")
-        with c2:
-            jam_pertemuan_2 = st.selectbox("Jam Rencana Pertemuan Kedua", jam_operasional)
-
-        # Panggil Fungsi Consent
+        
+        nifas = st.text_input("Usia Nifas (bila nifas)")
+        hamil = st.text_input("Usia Kehamilan (jika hamil)")
+        persalinan = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC (Sesar)"])
+        jam_operasional = st.selectbox("Jam Rencana Pertemuan Kedua", get_jam_operasional())
+        rencana_tgl = st.date_input("Rencana Pertemuan Kedua")
         ringkasan_consent, ic5 = get_informed_consent()
 
-        baris_data = ["*📋 DATA TAMBAHAN MOM & BABY (Special Package)*"]
-        tambah_data(baris_data, "Usia Nifas", usia_nifas)
-        tambah_data(baris_data, "Usia Kehamilan", usia_kehamilan)
-        tambah_data(baris_data, "Rencana Persalinan", rencana_persalinan)
-        tambah_data(baris_data, "Tanggal Pertemuan Kedua", rencana_pertemuan_2)
-        tambah_data(baris_data, "Jam Pertemuan Kedua", jam_pertemuan_2)
-        
-        baris_data.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
-        baris_data.append(f"• Setuju S&K: {'YA' if ic5 else 'TIDAK'}")
-
-        detail_konsultasi_wa = "\n".join(baris_data)
+        baris = ["*📋 DATA TAMBAHAN MOM & BABY*"]
+        tambah_data(baris, "Usia Nifas (bila nifas)", nifas)
+        tambah_data(baris, "Usia Kehamilan (jika hamil)", hamil)
+        tambah_data(baris, "Jenis Persalinan", persalinan)
+        tambah_data(baris, "Jam Rencana Pertemuan Ke-2", jam_operasional)
+        tambah_data(baris, "Rencana Tgl Ke-2", rencana_tgl)
+        baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
+        detail_konsultasi_wa = "\n".join(baris)
 
     else:
         detail_konsultasi_wa = "Terima Kasih 🩶"
 
-    # Tombol submit form
+    # Tombol submit (masih dalam scope st.form utama)
     submitted = st.form_submit_button("Siapkan Pesan WhatsApp")
 
-    if submitted:
-        # 1. CEK VALIDASI DASAR (Nama, Alamat, Kategori Utama)
-        if not nama_bunda:
-            st.error("❌ Mohon lengkapi Nama, Alamat, dan Pilih Layanan!")
-        elif not alamat:
-            st.error("❌ Mohon lengkapi Alamat")
-        elif kategori_layanan == "-- Pilih Kategori --":
-             st.error("❌ Mohon Pilih Layanan yang anda butuhkan!")
+if submitted:
+    errors = []
+    if not nama_bunda or not alamat:
+        errors.append("Nama Lengkap dan Alamat Rumah wajib diisi.")
+    
+    if kategori_layanan == "-- Pilih Kategori --":
+        errors.append("Pilih Kategori Layanan terlebih dahulu.")
+    elif layanan_final in ["-- Pilih Kategori --", "No options to select"]:
+        errors.append("Detail Treatment belum dipilih.")
         
-        # 2. CEK VALIDASI KOTA (Jika pilih 'Lainnya' tapi teks kosong)
-        elif kota == "Lainnya" and not kota_lainnya:
-            st.error("❌ Mohon sebutkan nama Kota/Kecamatan Anda!")
-        elif kota == "-- Pilih Kota Layanan --":
-            st.error("❌ Mohon pilih Kota Layanan Anda!")
+    if kota == "-- Pilih Kota Layanan --":
+        errors.append("Pilih Kota Layanan Anda.")
+    elif kota == "Lainnya" and not kota_final:
+        errors.append("Sebutkan nama Kota/Kecamatan Anda.")
 
-        # 3. CEK VALIDASI DETAIL TREATMENT (Agar tidak terkirim "-- Pilih Detail Treatment --")
-        elif layanan_final == "-- Pilih Detail Treatment --" or layanan_final == "No options to select":
-            st.error("❌ Mohon pilih Detail Treatment yang diinginkan!")
+    # Validasi Khusus Konsultasi (Harus Setuju S&K)
+    is_konsultasi = any(x in kategori_layanan for x in ["Konsultasi Menyusui", "Mom & Baby"])
+    if is_konsultasi and not ic5:
+        errors.append("Anda harus menyetujui Syarat & Ketentuan (Informed Consent).")
 
-        # 4. CEK VALIDASI INFORMED CONSENT (Syarat No. 4 untuk Konsultasi)
-        elif "Konsultasi Menyusui" in kategori_layanan or "Mom & Baby (Special Package)" in kategori_layanan and not ic5: # Sesuaikan ic5 adalah checkbox S&K Bunda
-            st.error("❌ Untuk layanan konsultasi, Anda harus menyetujui Syarat & Ketentuan layanan Annaira Homespa (Informed Consent).")
+    # Jika ada error, tampilkan semua sekaligus
+    if errors:
+        for err in errors:
+            st.error(f"❌ {err}")
+        st.stop()
 
-        # 5. JIKA SEMUA SUDAH OK
-        else:
-            st.success("✅ Data lengkap! Sedang menyiapkan pesan WhatsApp...")
-            
-            # Penentuan data final
-            fix_kota = kota_lainnya if kota == "Lainnya" else kota
-            fix_kondisi = keluhan_lain if kondisi == "Yang lain:" else kondisi
+    # 2. Pengolahan Data Final
+    fix_kota = kota_final if kota == "Lainnya" else kota
+    fix_kondisi = keluhan_lain if kondisi == "Yang lain:" else kondisi
+    
+    # Logic data tambahan berdasarkan status client
+    info_tambahan = ""
+    if status_client != "**Client Lama**":
+        info_tambahan = (
+            f"Tgl Lahir Anak: {tgl_lahir_anak.strftime('%d-%m-%Y')}\n"
+            f"Info tau Annaira: {info_sumber}\n\n"
+        )
 
-            if status_client == "**Client Lama**":
-                display_tgl_anak = ""
-                display_info =""
-            else:
-                display_tgl_anak = f"Tgl Lahir Anak: {tgl_lahir_anak.strftime('%d-%m-%Y')}\n"
-                display_info = f"Info: {info}\n\n"
-                
-            text_wa = (
-                f"*RESERVASI ANNAIRA HOME SPA*\n"
-                f"--------------------------------\n"
-                f"*Tanggal:* {tgl_res.strftime('%d-%m-%Y')}\n"
-                f"*Jam:* {jam_res}\n"
-                f"*Kota:* {fix_kota}\n"
-                f"*Layanan:* {kategori_layanan}\n"
-                f"*Detail:* {layanan_final}\n\n"
-                f"*Data Client:*\n"
-                f"Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
-                f"Anak: {nama_anak}\n"
-                f"{display_tgl_anak}"
-                f"Usia Anak: {usia_anak_saat_ini}\n"
-                f"Instagram: {ig}\n\n"
-                f"{display_info}"
-                f"*Keluhan/Kondisi:* {fix_kondisi}\n\n"
-                f"*Alamat Lengkap:*\n"
-                f"{alamat}\n"
-                f"{alamat_pengasuh}\n"
-                f"Patokan: {patokan}\n"
-                f"{detail_konsultasi_wa}"
-            )
-            
-            encoded_text = urllib.parse.quote(text_wa)
-            url_wa = f"https://wa.me/6282255514392?text={encoded_text}"
-            
-            st.markdown(f'<meta http-equiv="refresh" content="0;url={url_wa}">', unsafe_allow_html=True)
-            st.write(f"Mengarahkan ke WhatsApp... Jika tidak otomatis, [klik di sini]({url_wa})")
-            st.stop()
-            st.balloons()
+    # 3. Menyusun Template Pesan (Clean Multiline String)
+    text_wa = (
+        f"*RESERVASI ANNAIRA HOME SPA*\n"
+        f"--------------------------------\n"
+        f"*JADWAL & LAYANAN*\n"
+        f"• Tanggal: {tgl_res.strftime('%d-%m-%Y')}\n"
+        f"• Jam: {jam_operasional}\n"
+        f"• Kota: {fix_kota}\n"
+        f"• Layanan: {kategori_layanan}\n"
+        f"• Detail: {layanan_final}\n\n"
+        
+        f"*DATA CLIENT*\n"
+        f"• Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
+        f"• Anak: {nama_anak} ({usia_anak_saat_ini})\n"
+        f"• Instagram: {ig}\n"
+        f"{info_tambahan}"
+        
+        f"*KONDISI & ALAMAT*\n"
+        f"• Keluhan: {fix_kondisi}\n"
+        f"• Alamat: {alamat}\n"
+        f"• Pengasuh: {alamat_pengasuh if alamat_pengasuh else '-'}\n"
+        f"• Patokan: {patokan}\n\n"
+        
+        f"{detail_konsultasi_wa}"
+    )
+
+    # 4. Eksekusi Pengiriman
+    encoded_text = urllib.parse.quote(text_wa)
+    url_wa = f"https://wa.me/6282255514392?text={encoded_text}"
+
+    st.success("✅ Data siap dikirim!")
+    st.balloons()
+    
+    # Redirect otomatis
+    st.markdown(f'<meta http-equiv="refresh" content="0;url={url_wa}">', unsafe_allow_html=True)
+    st.link_button("Klik di sini jika tidak otomatis ke WhatsApp", url_wa)
