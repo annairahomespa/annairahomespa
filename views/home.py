@@ -17,6 +17,7 @@ DATA_CLIENT = [
         "nama_anak": "Rafa",
         "tgl_lahir": "2023-05-10",
         "alamat": "Jl. Ahmad Yani No. 12, Amuntai",
+        "alamat pengasuh": "",
         "patokan": "Dekat Masjid Raya",
         "instagram": "@alika_mom"
     },
@@ -26,6 +27,7 @@ DATA_CLIENT = [
         "nama_anak": "Zizi",
         "tgl_lahir": "2022-10-15",
         "alamat": "Komp. Perumahan Tanjung Indah Blok C",
+        "alamat pengasuh": "Sungai Malang RT 4",
         "patokan": "Pagar warna hijau",
         "instagram": "@sarah_parenting"
     }
@@ -360,6 +362,13 @@ with st.form("form_biodata"):
             # Penentuan data final
             fix_kota = kota_lainnya if kota == "Lainnya" else kota
             fix_kondisi = keluhan_lain if kondisi == "Yang lain:" else kondisi
+
+            if status_client == "Client Lama":
+                display_tgl_anak = ""
+                display_info =""
+            else:
+                display_tgl_anak = f"Tgl Lahir Anak: {tgl_lahir_anak.strftime('%d-%m-%Y')}\n"
+                display_info = f"Info: {info}\n\n"
                 
             text_wa = (
                 f"*RESERVASI ANNAIRA HOME SPA*\n"
@@ -372,10 +381,10 @@ with st.form("form_biodata"):
                 f"*Data Client:*\n"
                 f"Bunda/Ayah: {nama_bunda} ({usia_bunda} thn)\n"
                 f"Anak: {nama_anak}\n"
-                f"Tgl Lahir Anak: {tgl_lahir_anak.strftime('%d-%m-%Y')}\n"
+                f"{display_tgl_anak}"
                 f"Usia Anak: {usia_anak_saat_ini}\n"
                 f"Instagram: {ig}\n\n"
-                f"info: {info}\n\n"
+                f"{display_info}"
                 f"*Keluhan/Kondisi:* {fix_kondisi}\n\n"
                 f"*Alamat Lengkap:*\n"
                 f"{alamat}\n"
