@@ -33,8 +33,7 @@ DATA_CLIENT = [
     }
 ]
 
-st.write("Selamat datang, Bunda/Ayah.\n\n" \
-"Terimakasih telah menghubungi Annaira 🩶\n\n" \
+st.write("Selamat datang, Bunda/Ayah. Terimakasih telah menghubungi Annaira 🩶\n\n" \
 "Silahkan isi formulir berikut dengan data yang lengkap dan sesuai kondisi yaa")
 
 with st.container(key="card_reservasi"):
@@ -174,7 +173,7 @@ with st.form("form_biodata"):
     if status_client != "Client Lama":
         info = st.text_input("Bunda/Ayah tau annaira dari mana?")
 
-    st.subheader("🩺 Kondisi Khusus / Keluhan")
+    st.subheader("Kondisi Khusus / Keluhan")
     kondisi = st.radio(
         "Kondisi Saat Ini:",
         ["Tidak Ada", "Alergi Minyak", "Sedang Demam", "Batuk Pilek", "Kolik/Kembung", 
@@ -230,7 +229,7 @@ with st.form("form_biodata"):
             usia_hamil = st.text_input("Usia Kehamilan (jika hamil)")
 
         st.markdown("---")
-        st.write("**Riwayat Kehamilan & Persalinan**")
+        st.subheader("Riwayat Kehamilan & Persalinan")
         riwayat_sebelumnya = st.text_area("Ceritakan riwayat menyusui anak sebelumnya")
         riwayat_sekarang = st.text_area("Riwayat kehamilan dan persalinan saat ini")
         
@@ -246,24 +245,24 @@ with st.form("form_biodata"):
         kondisi_bayi = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan?")
         
         st.markdown("---")
-        st.write("**Kebiasaan & Nutrisi Bayi**")
+        st.subheader("Kebiasaan & Nutrisi Bayi")
         dot_detail = st.text_area("Apakah bayi pernah menggunakan dot?, sejak kapan dan ceritakan kronologisnya")
         asi_saja = st.text_area("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?")
         bb_bayi = st.text_area("Rincian BB (berat badan) bayi tiap bulannya (Lahir - Sekarang)")
         
         st.markdown("---")
-        st.write("**Manajemen Laktasi Bunda**")
+        st.subheader("Manajemen Laktasi Bunda")
         kebiasaan_pompa = st.text_area("Bagaimana kebiasaan Bunda dan hasilnya dalam proses memompa ASI?")
         asi_booster = st.text_area("Apakah Bunda mengkonsumsi ASI booster? Merk apa saja?")
         konsul_sebelumnya = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi?", ["Pernah", "Belum Pernah"])
         masalah_lain = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan")
 
         options_medis = ["Persalinan Lama", "Sectio Caesarea", "Hipertensi", "Diabetes Melitus", "Penyakit Tiroid", "Obesitas", "Pcos", "Tidak Semua"]
-        st.write("**Riwayat kondisi kesehatan:**")
+        st.subheader("Riwayat kondisi kesehatan:")
         hasil_pilihan = {opt: st.checkbox(opt) for opt in options_medis}
         
         st.markdown("---")
-        st.write("**Dukungan & Harapan**")
+        st.subheader("Dukungan & Harapan")
         dukungan = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
         harapan = st.text_area("Apa harapan Bunda dari konsultasi/pijat ini?")
 
