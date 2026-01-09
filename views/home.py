@@ -179,14 +179,14 @@ with st.form("form_biodata"):
     col3, col4 = st.columns(2)
     with col3:
         nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"])
-        ig = st.text_input("Akun Instagram", value=default_data["instagram"], placeholder="annaira.homespa")
+        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
         
     with col4:
         # Gunakan get() agar aman jika key tidak ada
         tgl_anak = default_data.get("tgl_lahir", datetime.now())
         if status_client == "**Client Baru**":
             tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=tgl_anak, format="DD-MM-YYYY")
-        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini")
+        ig = st.text_input("Akun Instagram", value=default_data["instagram"])
     
     # Input khusus client baru
     if status_client == "**Client Baru**":
