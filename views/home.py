@@ -33,8 +33,55 @@ DATA_CLIENT = [
     }
 ]
 
-st.write("Selamat datang, Bunda/Ayah. Terimakasih telah menghubungi Annaira 🩶\n\n" \
-"Silahkan isi formulir berikut dengan data yang lengkap dan sesuai kondisi yaa")
+LAYANAN_DATA = {
+    "Baby Treatment: usia 0-12 bulan": [
+        "Baby Massage (Rp 65.000)",
+        "Therapy Massage (Rp 80.000)",
+        "Immune Booster Massage (Rp 80.000)",
+        "Tuina Massage (Rp 80.000)",
+        "Combine Massage (Rp 100.000)"
+    ],
+    "Toddler Treatment: usia 1-3 tahun": [
+        "Toddler Massage (Rp 75.000)",
+        "Therapy Massage (Rp 90.000)",
+        "Immune Booster Massage (Rp 90.000)",
+        "Tuina Massage (Rp 90.000)",
+        "Combine Massage (Rp 110.000)"
+    ],
+    "Kid Treatment: usia 3-6 tahun": [
+        "Kid Massage (Rp 85.000)",
+        "Therapy Massage (Rp 100.000)",
+        "Immune Booster Massage (Rp 100.000)",
+        "Tuina Massage (Rp 100.000)",
+        "Combine Massage (Rp 120.000)"
+    ],
+    "Mom Treatment": [
+        "Breast Care/Pijat Payudara (Rp 100.000)",
+        "Oxytocin Massage/Pijat Punggung (Rp 100.000)",
+        "Lactation Massage (Rp 150.000)"
+    ],
+    "Mom & Baby (Special Package)": [
+        "Happy Package (Rp 205.000)",
+        "Calm Package (Rp 220.000)",
+        "Love Package (Rp 400.000)",
+        "Mindfull Package (Rp 420.000)"
+    ],
+    "Konsultasi Menyusui": [
+        "Online via Chat (Rp 70.000)",
+        "Online via VC/Call 60 menit (Rp 100.000)",
+        "Homevisit 60 menit (Rp 130.000)",
+        "Konsultasi & Oxytocin Massage (Rp 220.000)",
+        "Konsultasi & Breast Care (Rp 240.000)",
+        "Konsultasi & Lactation Massage (Rp 260.000)"
+    ]
+}
+
+def get_jam_operasional():
+    return [f"{jam:02d}:{menit:02d}" for jam in range(8, 19) for menit in [0, 15, 30, 45]]
+
+st.title("Annaira Home Spa 🩶")
+st.write("Selamat datang, Bunda/Ayah. Terimakasih telah menghubungi Annaira 🤗\n\n"
+         "Silahkan isi formulir berikut dengan data yang lengkap dan sesuai kondisi yaa")
 
 with st.container(key="card_reservasi"):
     st.subheader("Detail Reservasi")
@@ -42,88 +89,22 @@ with st.container(key="card_reservasi"):
 
     with col1:
         tgl_res = st.date_input("Tanggal Reservasi", value=datetime.now(), format="DD-MM-YYYY")
-
-        kota = st.selectbox("Pilih Kota Layanan:", ["-- Pilih Kota Layanan --", "Amuntai", "Tanjung", "Lainnya"])
         
-        kota_lainnya = ""
+        kota_opsi = ["-- Pilih Kota Layanan --", "Amuntai", "Tanjung", "Lainnya"]
+        kota = st.selectbox("Pilih Kota Layanan:", kota_opsi)
+        
+        kota_final = kota
         if kota == "Lainnya":
-            kota_lainnya = st.text_input("Sebutkan Nama Kota/Kecamatan:", placeholder="Contoh: Kalua")
-                
+            kota_final = st.text_input("Sebutkan Nama Kota/Kecamatan:", placeholder="Contoh: Kalua")
+
     with col2:
-        jam_operasional = []
-        for jam in range(8, 19):
-            jam_operasional.append(f"{jam:02d}:00")
-            jam_operasional.append(f"{jam:02d}:15")
-            jam_operasional.append(f"{jam:02d}:30")
-            jam_operasional.append(f"{jam:02d}:45")
+        jam_res = st.selectbox("Jam Reservasi", get_jam_operasional())
         
-        jam_res = st.selectbox("Jam Reservasi", jam_operasional)
+        kategori_layanan = st.selectbox("Pilih Kategori Layanan:", ["-- Pilih Kategori --"] + list(LAYANAN_DATA.keys()))
 
-        kategori_layanan = st.selectbox("Pilih Layanan:", [
-            "-- Pilih Kategori --",
-            "Baby Treatment: usia 0-12 bulan",
-            "Toddler Treatment: usia 1-3 tahun",
-            "Kid Treatment: usia 3-6 tahun",
-            "Mom Treatment",
-            "Mom & Baby (Special Package)",
-            "Konsultasi Menyusui"
-        ])
-
-        sub_opsi = []
-        
-        if "Baby Treatment: usia 0-12 bulan" in kategori_layanan:
-            sub_opsi = [
-                "Baby Massage (Rp 65.000)",
-                "Therapy Massage: Batuk, Pilek, Kolik, Sembelit, Diare (Rp 80.000)",
-                "Immune Booster Massage: Kekebalan Tubuh (Rp 80.000)",
-                "Tuina Massage: Nafsu Makan (Rp 80.000)",
-                "Combine Massage: Terapi, Tuina, Imun Booster (Rp 100.000)"
-            ]
-        elif "Toddler Treatment: usia 1-3 tahun" in kategori_layanan:
-            sub_opsi = [
-                "Toddler Massage (Rp 75.000)",
-                "Therapy Massage: Batuk, Pilek, Kolik, Sembelit, Diare (Rp 90.000)",
-                "Immune Booster Massage: Kekebalan Tubuh (Rp 90.000)",
-                "Tuina Massage: Nafsu Makan (Rp 90.000)",
-                "Combine Massage: Terapi, Tuina, Imun Booster (Rp 110.000)"
-            ]
-        elif "Kid Treatment: usia 3-6 tahun" in kategori_layanan:
-            sub_opsi = [
-                "Kid Massage (Rp 85.000)",
-                "Therapy Massage: Batuk, Pilek, Kolik, Sembelit, Diare (Rp 100.000)",
-                "Immune Booster Massage: Kekebalan Tubuh (Rp 100.000)",
-                "Tuina Massage: Nafsu Makan (Rp 100.000)",
-                "Combine Massage: Terapi, Tuina, Imun Booster (Rp 120.000)"
-            ]
-        elif "Mom Treatment" in kategori_layanan:
-            sub_opsi = [
-                "Breast Care/Pijat Payudara (Sumbatan, Granjelan, Bengkak) (Rp 100.000)",
-                "Oxytocin Massage/Pijat Punggung (Melancarkan Aliran ASI) (Rp 100.000)",
-                "Lactation Massage/Pijat Payudara & Punggung (Melancarkan & Meningkatkan Produksi ASI) (Rp 150.000)"
-            ]
-        elif "Mom & Baby (Special Package)" in kategori_layanan:
-            sub_opsi = [
-                "Happy Package: Pijat Laktasi 1x & Pijat Bayi 1x (Rp 205.000)",
-                "Calm Package: Pijat Laktasi 1x & Pijat Bayi Terapi 1x (Rp 220.000)",
-                "Love Package: Pijat Laktasi 2x & Pijat Bayi 2x (Rp 400.000)",
-                "Mindfull Package: Pijat Laktasi 2x & Pijat Bayi Terapi 2x (Rp 420.000)"
-            ]
-        elif "Konsultasi Menyusui" in kategori_layanan:
-            sub_opsi = [
-                "-- Pilih Kategori --",
-                "Konsultasi Menyusui Online via Chat (Rp 70.000)",
-                "Konsultasi Menyusui Online via VC/Call 60 menit (Rp 100.000)",
-                "Konsultasi Menyusui Homevisit 60 menit (Rp 130.000)",
-                "Konsultasi Menyusui & Oxytocin Massage 100 menit (Rp 220.000)",
-                "Konsultasi Menyusui & Breast Care 110 menit (Rp 240.000)",
-                "Konsultasi Menyusui & Lactation Massage 120 menit (Rp 260.000)"
-            ]
-
-        # Munculkan selectbox kedua untuk detail layanan
+        layanan_final = None
         if kategori_layanan != "-- Pilih Kategori --":
-            layanan_final = st.radio("Pilih Detail Treatment:", sub_opsi)
-        else:
-            layanan_final = "-- Pilih Kategori --"
+            layanan_final = st.radio("Pilih Detail Treatment:", LAYANAN_DATA[kategori_layanan])
 
 st.markdown("### **Status Client:**")
 status_client = st.radio("",["**Client Baru**", "**Client Lama**"], horizontal=True, label_visibility="collapsed")
