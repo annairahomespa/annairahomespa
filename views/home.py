@@ -193,7 +193,7 @@ with st.form("form_biodata"):
 
         st.markdown("---")
         st.write("**Riwayat Kehamilan & Persalinan**")
-        riwayat_sebelumnya = st.text_area("Ceritakan riwayat menyusui anak sebelumnya (jika ada)")
+        riwayat_sebelumnya = st.text_area("Ceritakan riwayat menyusui anak sebelumnya")
         riwayat_sekarang = st.text_area("Riwayat kehamilan dan persalinan saat ini")
         
         c3, c4 = st.columns(2)
@@ -202,10 +202,9 @@ with st.form("form_biodata"):
             usia_kehamilan_lahir = st.text_input("Usia Kehamilan (saat melahirkan)")
         with c4:
             tempat_persalinan = st.text_input("Tempat Persalinan (RS/Klinik/Rumah)")
-            rencana_persalinan = st.text_input("Rencana Persalinan (jika sedang hamil)")
+            # rencana_persalinan = st.text_input("Rencana Persalinan (jika sedang hamil)")
 
-        imd = st.radio("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan?", ["Iya", "Tidak"])
-        imd_detail = st.text_input("Jika iya, berapa lama IMD dilakukan?") if imd == "Iya" else ""
+        imd_detail = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan?") if imd == "Iya" else ""
         
         rawat_gabung = st.radio("Apakah setelah persalinan Bayi rawat gabung dengan Bunda?", ["Iya", "Tidak"])
         kondisi_bayi = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan?")
@@ -214,7 +213,7 @@ with st.form("form_biodata"):
         st.write("**Kebiasaan & Nutrisi Bayi**")
         dot_detail = st.text_area("Apakah bayi pernah menggunakan dot?, sejak kapan dan ceritakan kronologisnya")
         
-        asi_saja = st.radio("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?", ["ASI Saja", "ASI + Sufor/Lainnya"])
+        asi_saja = st.text_area("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?")
         bb_bayi = st.text_area("Rincian BB (berat badan) bayi tiap bulannya (Lahir - Sekarang)")
         
         st.markdown("---")
@@ -224,6 +223,10 @@ with st.form("form_biodata"):
         konsul_sebelumnya = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi?", ["Pernah", "Belum Pernah"])
         masalah_lain = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan")
 
+        st.markdown("---")
+        st.write("**Riwayat Medis**")
+        st.radio(["Persalinan Lama", "Sectio Caesarea", "Hipertensi", "Diabetes Melitus", "Penyakit Tiroid", "Obesitas", "Pcos", "Tidak Semua"])
+        
         st.markdown("---")
         st.write("**Dukungan & Harapan**")
         dukungan = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
