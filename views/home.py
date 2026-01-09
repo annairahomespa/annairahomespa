@@ -307,7 +307,7 @@ with st.form("form_biodata"):
         
         baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
         baris.append(f"• Setuju S&K: {'YA' if ic5 else 'TIDAK'}")
-        detail_konsultasi_wa = "\nTerima Kasih 🩶".join(baris)
+        detail_konsultasi_wa = "\n".join(baris)
 
     elif "Mom & Baby (Special Package)" in kategori_layanan:
         st.divider()
@@ -317,7 +317,7 @@ with st.form("form_biodata"):
         hamil = st.text_input("Usia Kehamilan (jika hamil)")
         persalinan = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC (Sesar)"])
         jam_operasional = st.selectbox("Jam Rencana Pertemuan Kedua", get_jam_operasional())
-        rencana_tgl = st.date_input("Rencana Pertemuan Kedua")
+        rencana_tgl = st.date_input("Rencana Pertemuan Kedua", format="DD-MM-YYYY")
         ringkasan_consent, ic5 = get_informed_consent()
 
         baris = ["*📋 DATA TAMBAHAN MOM & BABY*"]
@@ -327,7 +327,7 @@ with st.form("form_biodata"):
         tambah_data(baris, "Jam Rencana Pertemuan Ke-2", jam_operasional)
         tambah_data(baris, "Rencana Tgl Ke-2", rencana_tgl)
         baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}")
-        detail_konsultasi_wa = "\nTerima Kasih 🩶".join(baris)
+        detail_konsultasi_wa = "\n".join(baris)
 
     else:
         detail_konsultasi_wa = "Terima Kasih 🩶"
