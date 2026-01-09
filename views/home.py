@@ -123,23 +123,51 @@ default_data = {
 st.markdown("### **Status Client:**")
 status_client = st.radio("", ["**Client Baru**", "**Client Lama**"], horizontal=True, label_visibility="collapsed")
 
-if status_client == "**Client Lama**":
-    daftar_nama = sorted([c["nama_bunda"] for c in DATA_CLIENT])
+def handle_client_lama_search(data_client):
+    query = st.text_input("🔍 Cari Nama Bunda/Ayah:", placeholder="Ketik nama untuk mencari...")
     
-    search_nama_list = st.multiselect(
-        "Cari & Pilih Nama Bunda/Ayah:", 
-        options=daftar_nama,
-        max_selections=1,
-        placeholder="Ketik nama di sini..."
+    if not query:
+        st.caption("Masukkan minimal 1 huruf untuk mencari data.")
+        return None
+
+    daftar_nama = sorted([c["nama_bunda"] for c in data_client])
+    hasil_filter = [n for n in daftar_nama if query.lower() in n.lower()]
+
+    if not hasil_filter:
+        st.warning("⚠️ Nama tidak ditemukan. Coba ejaan lain atau daftar sebagai Client Baru.")
+        return None
+
+    st.info(f"Ditemukan {len(hasil_filter)} nama yang cocok:")
+    selected_nama = st.radio(
+        "Pilih salah satu:",
+        options=hasil_filter,
+        index=None,
+        key="radio_client_lama"
     )
     
-    if search_nama_list:
-        search_nama = search_nama_list[0]
-        user_match = next((item for item in DATA_CLIENT if item["nama_bunda"] == search_nama), None)
-        if user_match:
-            default_data.update(user_match)
-            if isinstance(default_data["tgl_lahir"], str):
-                default_data["tgl_lahir"] = datetime.strptime(default_data["tgl_lahir"], "%Y-%m-%d")
+    # Cari objek data lengkap berdasarkan nama yang dipilih
+    if selected_nama:
+        return next((item for item in data_client if item["nama_bunda"] == selected_nama), None)
+    
+    return None
+
+def update_default_with_client_data(default_dict, client_data):
+    if client_data:
+        default_dict.update(client_data)
+        
+        if isinstance(default_dict.get("tgl_lahir"), str):
+            try:
+                default_dict["tgl_lahir"] = datetime.strptime(default_dict["tgl_lahir"], "%Y-%m-%d")
+            except ValueError:
+                default_dict["tgl_lahir"] = datetime.now()
+    return default_dict
+
+if status_client == "**Client Lama**":
+    client_terpilih = handle_client_lama_search(DATA_CLIENT)
+    
+    if client_terpilih:
+        default_data = update_default_with_client_data(default_data, client_terpilih)
+        st.success(f"Data {client_terpilih['nama_bunda']} berhasil dimuat!")
 
 with st.form("form_biodata"):
     st.subheader("Data Orang Tua & Anak")
