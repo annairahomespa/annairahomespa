@@ -58,7 +58,8 @@ div[data-baseweb="input"],
 div[data-baseweb="select"] > div, 
 div[data-baseweb="base-input"],
 .stDateInput > div {
-    background-color: #604F3B !important; 
+    background-color: #604F3B !important;
+    opacity: .85; 
     border-radius: 12px !important;
     border: none !important;
 }
