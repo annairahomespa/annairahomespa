@@ -197,7 +197,7 @@ with st.form("form_biodata"):
 
     st.subheader("Kondisi Khusus / Keluhan")
     opsi_kondisi = [
-        "Tidak Ada", "Alergi Minyak", "Sedang Demam", "Batuk Pilek", 
+        "Alergi Minyak", "Sedang Demam", "Batuk Pilek", 
         "Kolik/Kembung", "Diare", "Sembelit", "Payudara Bengkak", 
         "Sumbatan ASI"
     ]
@@ -212,9 +212,7 @@ with st.form("form_biodata"):
     input_lain = st.text_input("Sebutkan keluhan lain:", placeholder="Tulis di sini...")
     if input_lain:
         pilihan_user.append(input_lain)
-    if "Tidak Ada" in pilihan_user and len(pilihan_user) > 1:
-        pilihan_user.remove("Tidak Ada")
-    fix_kondisi = ", ".join(pilihan_user) if pilihan_user else "-"
+    fix_kondisi = ", ".join(pilihan_user) if pilihan_user else "Tidak Ada Kondisi Khusus/Keluhan"
 
     st.subheader("Alamat Lengkap")
     alamat = st.text_area("Alamat Rumah", value=default_data["alamat"], placeholder="Tulis di sini...")
@@ -406,6 +404,12 @@ if submitted:
             f"• Instagram: {ig}\n"
             f"• Info tau Annaira: {info_sumber}\n\n"
         )
+    
+    info_alamat_pengasuh =""
+    if alamat_pengasuh and alamat_pengasuh.strip():
+        info_alamat_pengasuh = (
+             f"• Alamat Pengasuh: {alamat_pengasuh.strip()}\n"
+        )
 
     # 3. Menyusun Template Pesan (Clean Multiline String)
     text_wa = (
@@ -426,7 +430,7 @@ if submitted:
         f"*KONDISI & ALAMAT*\n"
         f"• Keluhan: {fix_kondisi}\n"
         f"• Alamat: {alamat}\n"
-        f"• Alamat Pengasuh: {alamat_pengasuh if alamat_pengasuh else '-'}\n"
+        f"{info_alamat_pengasuh}\n"
         f"• Patokan: {patokan}\n\n"
         
         f"{detail_konsultasi_wa}"
