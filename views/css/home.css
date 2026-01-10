@@ -108,3 +108,7 @@ input {
     color: #FCFCFC !important;
     -webkit-text-fill-color: #FCFCFC !important;
 }
+
+.stTextInput label p {
+    font-size: 16px !important;
+}

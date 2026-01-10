@@ -410,8 +410,7 @@ if submitted:
         info_alamat_pengasuh = (
              f"• Alamat Pengasuh: {alamat_pengasuh.strip()}\n"
         )
-
-    # 3. Menyusun Template Pesan (Clean Multiline String)
+        
     text_wa = (
         f"*RESERVASI ANNAIRA HOME SPA*\n"
         f"--------------------------------\n"
