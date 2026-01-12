@@ -3,6 +3,10 @@ from datetime import datetime
 from datetime import date
 import urllib.parse
 import os
+import pandas as pd
+from streamlit_gsheets import GSheetsConnection
+
+conn = st.connection("gsheets", type=GSheetsConnection)
 
 def local_css(file_name):
     if os.path.exists(file_name):
@@ -10,29 +14,6 @@ def local_css(file_name):
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 local_css("views/css/home.css")
-
-DATA_CLIENT = [
-    {
-        "nama_bunda": "Bunda Alika",
-        "usia_bunda": 28,
-        "nama_anak": "Rafa",
-        "tgl_lahir": "2023-05-10",
-        "alamat": "Jl. Ahmad Yani No. 12, Amuntai",
-        "alamat pengasuh": "",
-        "patokan": "Dekat Masjid Raya",
-        "instagram": "@alika_mom"
-    },
-    {
-        "nama_bunda": "Bunda Sarah",
-        "usia_bunda": 31,
-        "nama_anak": "Zizi",
-        "tgl_lahir": "2022-10-15",
-        "alamat": "Komp. Perumahan Tanjung Indah Blok C",
-        "alamat pengasuh": "Sungai Malang RT 4",
-        "patokan": "Pagar warna hijau",
-        "instagram": "@sarah_parenting"
-    }
-]
 
 LAYANAN_DATA = {
     "Baby Treatment: usia 0-12 bulan": [
@@ -164,11 +145,16 @@ def update_default_with_client_data(default_dict, client_data):
     return default_dict
 
 if status_client == "**Client Lama**":
+    df_client = conn.read(worksheet="Data_Client_Lama")
+    DATA_CLIENT = df_client.to_dict(orient="records")
     client_terpilih = handle_client_lama_search(DATA_CLIENT)
     
     if client_terpilih:
         default_data = update_default_with_client_data(default_data, client_terpilih)
         st.success(f"Data {client_terpilih['nama_bunda']} berhasil dimuat!")
+
+rencana_tgl = None
+jam_pertemuan_2 = None
 
 with st.form("form_biodata"):
     st.subheader("Data Orang Tua & Anak")
@@ -343,9 +329,6 @@ with st.form("form_biodata"):
         nifas = st.text_input("Usia Nifas (bila nifas)")
         hamil = st.text_input("Usia Kehamilan (jika hamil)")
         persalinan = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC"])
-        
-        rencana_tgl = None
-        jam_pertemuan_2 = None
 
         paket_dua_kali = [
             "Love Package: Pijat Laktasi 2x & Pijat Bayi 2x (Rp 400.000)",
@@ -374,7 +357,7 @@ with st.form("form_biodata"):
         detail_konsultasi_wa = "\n".join(baris)
 
     else:
-        detail_konsultasi_wa = "Terima Kasih 🩶"
+        detail_konsultasi_wa = ""
 
     # Tombol submit (masih dalam scope st.form utama)
     submitted = st.form_submit_button("Preview Pesanan Bunda") 
@@ -451,6 +434,62 @@ if submitted:
         
         f"{detail_konsultasi_wa}"
     )
+
+    new_data = {
+        "Tanggal Reservasi": tgl_res.strftime('%d-%m-%Y'),
+        "Jam Reservasi": jam_operasional,
+        "Kota Layanan": fix_kota,
+        "Kategori Layanan": kategori_layanan,
+        "Detail Treatment": layanan_final,
+        "Nama Lengkap Bunda/Ayah": nama_bunda,
+        "Usia Bunda": usia_bunda,
+        "Nama Lengkap Anak": nama_anak,
+        "Tanggal Lahir Anak": tgl_lahir_anak.strftime('%d-%m-%Y'),
+        "Usia Anak Saat Ini": usia_anak_saat_ini,
+        "Akun Instagram": ig,
+        "Bunda/Ayah tau annaira dari mana?": info_sumber,
+        "Kondisi Khusus / Keluhan": fix_kondisi,
+        "Alamat Rumah": alamat,
+        "Alamat Pengasuh (Jika Ada)": alamat_pengasuh,
+        "Catatan Patokan Lokasi": patokan,
+        "Keterangan": detail_konsultasi_wa
+    }
+
+    @st.cache_data(ttl=600, show_spinner=False)
+    def ambil_data_master():
+        return conn.read(worksheet="Master_Data")
+    
+    @st.cache_data(ttl=600, show_spinner=False)
+    def ambil_data_rekam_medis():
+        return conn.read(worksheet="Data_Rekam_Medis_Konsultasi_Menyusui")
+
+    try:
+      with st.spinner("Sedang menghubungkan ke database Annaira..."):
+        if "Konsultasi Menyusui" in kategori_layanan:
+            existing_data = ambil_data_rekam_medis()
+        else:
+            existing_data = ambil_data_master()
+        
+        # 2. Buat DataFrame baru dari data user
+        df_new = pd.DataFrame([new_data])
+        
+        # 3. Gabungkan data lama dan baru (Append)
+        updated_df = pd.concat([existing_data, df_new], ignore_index=True)
+
+        if "Konsultasi Menyusui" in kategori_layanan:
+            conn.update(worksheet="Data_Rekam_Medis_Konsultasi_Menyusui", data=updated_df)
+        else:
+            conn.update(worksheet="Master_Data", data=updated_df)
+
+        # 5. Ulangi proses jika ada Pertemuan Ke-2
+        if rencana_tgl and jam_pertemuan_2:
+            second_visit = new_data.copy()
+            second_visit["Tanggal Reservasi"] = rencana_tgl.strftime('%d-%m-%Y')
+            second_visit["Jam Reservasi"] = jam_pertemuan_2
+            second_visit["Keterangan"] = "Kunjungan Ke-2 (Paket 2x)"
+            pass
+    except Exception as e:
+        st.error(f"Failed: {e}")
 
     # 1. Encode URL
     encoded_text = urllib.parse.quote(text_wa)
