@@ -310,7 +310,7 @@ with st.form("form_biodata"):
         
         nifas = st.text_input("Usia Nifas (bila nifas)")
         hamil = st.text_input("Usia Kehamilan (jika hamil)")
-        persalinan = st.selectbox("Rencana Persalinan", ["Persalinan Normal", "Operasi SC"])
+        persalinan = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC"])
 
         baris = ["*Data Tambahan Mom Treatment*"]
         tambah_data(baris, "Usia Nifas (bila nifas)", nifas)

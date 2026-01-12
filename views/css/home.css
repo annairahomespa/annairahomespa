@@ -1,4 +1,4 @@
-/* style.css - Annaira Home Spa (Versi Optimal dengan config.toml) */
+/* style.css - Annaira Home Spa (Optimized Font & Input Size) */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap');
 
 @keyframes pageTransition {
@@ -12,11 +12,10 @@
     }
 }
 
-
 /* --- 1. SETTING DASAR --- */
 .stApp {
-    font-family: 'Nunito';
-    font-weight: 1000 !important;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400; /* Mengurangi dari 1000 agar lebih terbaca */
     animation: pageTransition 0.8s ease-out;
 }
 
@@ -25,14 +24,12 @@
     padding-bottom: 5rem;
 }
         
-/* Menghilangkan header transparan bawaan Streamlit */
 header {
     visibility: hidden;
     height: 0px;
 }
 
 /* --- 2. KARTU PUTIH (CONTAINER & FORM) --- */
-/* config.toml tidak bisa mengatur shadow dan border-radius ini */
 .st-key-card_reservasi, div[data-testid="stForm"] {
     background-color: #FCFCFC !important;
     padding: 35px !important;
@@ -41,75 +38,80 @@ header {
     box-shadow: 0 10px 30px rgba(96, 79, 59, 0.05) !important;
 }
 
-/* Memaksa semua label input berwarna cokelat tua */
-label p, .stMarkdown p, .stSelectbox label p {
-    color: #604F3B !important;
-    font-weight: 600 !important;
-}
-
-/* Khusus untuk teks label pada Date Input dan Selectbox */
+/* --- 3. KESERAGAMAN LABEL --- */
+/* Menyeragamkan semua label (teks di atas input) */
+label p, 
+.stMarkdown p, 
 div[data-testid="stWidgetLabel"] p {
     color: #604F3B !important;
+    font-family: 'Nunito', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 16px !important; /* Ukuran font label seragam */
 }
 
-/* --- 3. INPUT FIELD (FULL COKELAT #604F3B) --- */
-/* config.toml tidak mewarnai background kotak input secara otomatis */
+/* --- 4. KESERAGAMAN ISI INPUT --- */
+/* Target: text_input, number_input, date_input, selectbox, radio, text_area */
+input, 
+textarea, 
+div[data-baseweb="select"] div, 
+div[role="radiogroup"] label p,
+div[data-testid="stNumberInput"] input {
+    font-family: 'Nunito', sans-serif !important;
+    font-size: 15px !important; /* Ukuran font isi input seragam */
+    color: #FCFCFC !important;
+}
+
+/* Khusus Radio Button (karena biasanya teksnya di samping, bukan di dalam kotak cokelat) */
+div[role="radiogroup"] label p {
+    color: #604F3B !important; /* Teks radio tetap cokelat agar terbaca */
+    font-weight: 400 !important;
+}
+
+/* --- 5. STYLE KOTAK INPUT (BACKGROUND COKELAT) --- */
 div[data-baseweb="input"], 
 div[data-baseweb="select"] > div, 
 div[data-baseweb="base-input"],
-.stDateInput > div {
+.stDateInput > div,
+div[data-testid="stTextArea"] > div {
     background-color: #604F3B !important;
     opacity: .85; 
     border-radius: 12px !important;
     border: none !important;
 }
 
-input::placeholder {
-    opacity: 0.4 !important; /* Semakin kecil angka, semakin transparan/tipis */
-    color: #604F3B !important; /* Menggunakan warna cokelat Annaira */
-    font-weight: 400 !important; /* Membuat font tidak tebal */
-}
-
-/* Warna teks dan ikon di dalam kotak input */
-input, .stSelectbox div, .stDateInput div, div[role="button"], textarea, svg {
+/* Placeholder agar tidak terlalu mencolok */
+input::placeholder, textarea::placeholder {
+    opacity: 0.6 !important;
     color: #FCFCFC !important;
-    fill: #FCFCFC !important;
+    font-family: 'Nunito', sans-serif !important;
+    font-size: 14px !important;
 }
 
-/* --- 4. TOMBOL SUBMIT --- */
-/* Menambah kelengkungan tombol agar lebih estetik */
+/* Warna kursor dan teks saat mengetik */
+input, textarea {
+    caret-color: #FCFCFC !important;
+    -webkit-text-fill-color: #FCFCFC !important;
+}
+
+/* Ikon pada Selectbox dan DateInput */
+svg {
+    fill: #FCFCFC !important;
+    color: #FCFCFC !important;
+}
+
+/* --- 6. TOMBOL & WIDGET LAIN --- */
 button[kind="formSubmit"] {
     border-radius: 15px !important;
     font-weight: 600 !important;
+    font-family: 'Nunito', sans-serif !important;
     width: 100%;
 }
 
-/* --- 5. PERAPI JARAK --- */
-[data-testid="column"] {
-    padding: 0 10px !important;
-}
-
-
-/* Mengubah warna ikon plus dan minus menjadi cokelat agar terlihat */
+/* Ikon Plus Minus pada Number Input */
 div[data-testid="stNumberInput"] button svg {
     fill: #604F3B !important;
 }
 
-/* Memberi warna latar belakang tombol saat di-hover agar lebih jelas */
-div[data-testid="stNumberInput"] button:hover {
-    background-color: rgba(96, 79, 59, 0.1) !important;
-}
-
-input, textarea {
-    caret-color: #FCFCFC !important;
-}
-
-/* Memastikan teks yang sedang diketik juga berwarna putih bersih */
-input {
-    color: #FCFCFC !important;
-    -webkit-text-fill-color: #FCFCFC !important;
-}
-
-.stTextInput label p {
-    font-size: 16px !important;
+[data-testid="column"] {
+    padding: 0 10px !important;
 }
