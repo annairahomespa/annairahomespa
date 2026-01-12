@@ -61,6 +61,23 @@ LAYANAN_DATA = {
 def get_jam_operasional():
     return [f"{jam:02d}:{menit:02d}" for jam in range(8, 19) for menit in [0, 15, 30, 45]]
 
+def duration_treatment():
+    if kategori_layanan == "Baby Treatment: usia 0-12 bulan":
+        st.write(
+            f'<span style="opacity: {0.7};">Untuk semua treatment pijat bayi berdurasi 30 - 45 menit</span>', 
+            unsafe_allow_html=True
+        )
+    elif kategori_layanan == "Toddler Treatment: usia 1-3 tahun":
+        st.write(
+            f'<span style="opacity: {0.7};">Untuk semua treatment pijat Balita berdurasi 45 - 60 menit</span>', 
+            unsafe_allow_html=True
+        )
+    elif kategori_layanan == "Kid Treatment: usia 3-6 tahun":
+        st.write(
+            f'<span style="opacity: {0.7};">Untuk semua treatment pijat Anak berdurasi 60 menit</span>', 
+            unsafe_allow_html=True
+        )
+
 st.header("Annaira Home Spa")
 st.write("Selamat datang, Bunda/Ayah. Terimakasih telah menghubungi Annaira 🤍\n\n"
          "Silahkan isi formulir berikut dengan data yang lengkap dan sesuai kondisi yaa")
@@ -87,6 +104,7 @@ with st.container(key="card_reservasi"):
         layanan_final = None
         if kategori_layanan != "-- Pilih Kategori --":
             layanan_final = st.radio("Pilih Detail Treatment:", LAYANAN_DATA[kategori_layanan])
+            duration_treatment()
 
 import streamlit as st
 from datetime import datetime
