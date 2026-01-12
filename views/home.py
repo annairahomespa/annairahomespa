@@ -410,6 +410,12 @@ if submitted:
         info_alamat_pengasuh = (
              f"• Alamat Pengasuh: {alamat_pengasuh.strip()}\n"
         )
+
+    patokan =""
+    if patokan and patokan.strip():
+        patokan = (
+             f"• Patokan: {patokan}"
+        )
         
     text_wa = (
         f"*RESERVASI ANNAIRA HOME SPA*\n"
@@ -430,7 +436,7 @@ if submitted:
         f"• Keluhan: {fix_kondisi}\n"
         f"• Alamat: {alamat}\n"
         f"{info_alamat_pengasuh}\n"
-        f"• Patokan: {patokan}\n\n"
+        f"{patokan}\n\n"
         
         f"{detail_konsultasi_wa}"
     )
