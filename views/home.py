@@ -343,17 +343,34 @@ with st.form("form_biodata"):
         nifas = st.text_input("Usia Nifas (bila nifas)")
         hamil = st.text_input("Usia Kehamilan (jika hamil)")
         persalinan = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC"])
-        jam_operasional = st.selectbox("Jam Rencana Pertemuan Kedua", get_jam_operasional())
-        rencana_tgl = st.date_input("Rencana Pertemuan Kedua", format="DD-MM-YYYY")
+        
+        rencana_tgl = None
+        jam_pertemuan_2 = None
+
+        paket_dua_kali = [
+            "Love Package: Pijat Laktasi 2x & Pijat Bayi 2x (Rp 400.000)",
+            "Mindfull Package: Pijat Laktasi 2x & Pijat Bayi Terapi 2x (Rp 420.000)"
+        ]
+
+        if layanan_final in paket_dua_kali:
+            st.info("**Paket 2x Kunjungan Terpilih.** Silahkan atur jadwal pertemuan kedua:")
+            col_tgl2, col_jam2 = st.columns(2)
+            with col_tgl2:
+                rencana_tgl = st.date_input("Rencana Pertemuan Kedua", format="DD-MM-YYYY", key="tgl_2")
+            with col_jam2:
+                jam_pertemuan_2 = st.selectbox("Jam Rencana Pertemuan Kedua", get_jam_operasional(), key="jam_2")
+        
         ringkasan_consent, ic5 = get_informed_consent()
 
         baris = ["*DATA TAMBAHAN MOM & BABY*"]
-        tambah_data(baris, "Usia Nifas (bila nifas)", nifas)
-        tambah_data(baris, "Usia Kehamilan (jika hamil)", hamil)
+        tambah_data(baris, "Usia Nifas", nifas)
+        tambah_data(baris, "Usia Kehamilan", hamil)
         tambah_data(baris, "Jenis Persalinan", persalinan)
-        tambah_data(baris, "Rencana Tgl Ke-2", rencana_tgl)
-        tambah_data(baris, "Jam Rencana Pertemuan Ke-2", jam_operasional)
-        baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}\n   - Setuju S&K layanan Annaira Homespa: {'YA' if ic5 else 'TIDAK'}\n")
+        
+        if rencana_tgl and jam_pertemuan_2:
+            baris.append(f"• Rencana Pertemuan Ke-2: {rencana_tgl.strftime('%d-%m-%Y')} | jam {jam_pertemuan_2}")
+        
+        baris.append(f"\n*Izin Dokumentasi:*\n   - {ringkasan_consent}\n   - Setuju S&K: {'YA' if ic5 else 'TIDAK'}")
         detail_konsultasi_wa = "\n".join(baris)
 
     else:
