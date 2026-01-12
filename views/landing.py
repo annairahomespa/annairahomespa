@@ -33,9 +33,7 @@ st.markdown("""
         <p class="hero-subtitle">
             Setiap perjalanan bunda dan si kecil begitu berharga. <br>
             Melalui website ini, Annaira ingin memahami kebutuhan bunda dan bayi dengan 
-            lebih baik agar sesi nantinya dapat berjalan dengan nyaman dan sesuai kebutuhan.
-        </p>
-        <p class="hero-small-text">
+            lebih baik agar sesi nantinya dapat berjalan dengan nyaman dan sesuai kebutuhan.<br>
             Jadwalkan momen spesial bunda<br>dan si kecil bersama Annaira 🤍
         </p>
     </div>
@@ -48,4 +46,4 @@ with col_button:
         time.sleep(0.5)
         st.switch_page("views/home.py")
 
-st.markdown('<div class="hero-footer-right">annaira.homespa</div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-footer-left">annaira.homespa</div>', unsafe_allow_html=True)

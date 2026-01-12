@@ -62,7 +62,7 @@ def get_jam_operasional():
     return [f"{jam:02d}:{menit:02d}" for jam in range(8, 19) for menit in [0, 15, 30, 45]]
 
 st.header("Annaira Home Spa")
-st.write("Selamat datang, Bunda/Ayah. Terimakasih telah menghubungi Annaira 🤗\n\n"
+st.write("Selamat datang, Bunda/Ayah. Terimakasih telah menghubungi Annaira 🤍\n\n"
          "Silahkan isi formulir berikut dengan data yang lengkap dan sesuai kondisi yaa")
 
 with st.container(key="card_reservasi"):
@@ -173,7 +173,7 @@ with st.form("form_biodata"):
             tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=tgl_anak, format="DD-MM-YYYY")
             ig = st.text_input("Akun Instagram", value=default_data["instagram"], placeholder="Tulis di sini...")
     
-        info_opsi = ["-- Pilih Opsi --", "Instagram", "Tiktok", "Whatsapp", "Twitter", "Rekomendasi Teman", "Mencari Sendiri di Social Media"]
+        info_opsi = ["-- Pilih Opsi --", "Instagram", "Tiktok", "Whatsapp", "Facebook", "Rekomendasi Teman", "Mencari Sendiri di Social Media"]
         info_sumber = st.selectbox("Bunda/Ayah tau annaira dari mana?", info_opsi)
     
     else:
@@ -187,13 +187,11 @@ with st.form("form_biodata"):
         "Kolik/Kembung", "Diare", "Sembelit", "Payudara Bengkak", 
         "Sumbatan ASI"
     ]
-    col1, col2 = st.columns(2)
     pilihan_user = []
 
     for i, opsi in enumerate(opsi_kondisi):
-        with col1 if i % 2 == 0 else col2:
-            if st.checkbox(opsi, key=opsi):
-                pilihan_user.append(opsi)
+        if st.checkbox(opsi, key=opsi):
+            pilihan_user.append(opsi)
 
     input_lain = st.text_input("Sebutkan keluhan lain:", placeholder="Tulis di sini...")
     if input_lain:
@@ -245,14 +243,12 @@ with st.form("form_biodata"):
                 "WA Bunda": st.text_input("Nomor HP Bunda (WhatsApp)"),
                 "Tgl Lahir Bunda": st.date_input("Tanggal Lahir Bunda", value=date(1990, 1, 1), min_value=date(1945, 1, 1), max_value=date.today(), format="DD-MM-YYYY"),
                 "Pekerjaan": st.text_input("Pekerjaan Bunda"),
-                "Anak Ke": st.number_input("Ananda merupakan anak ke berapa?", min_value=1, step=1)
             }
         with col2:
             data.update({
+                "Anak Ke": st.number_input("Ananda merupakan anak ke berapa?", min_value=1, step=1),
                 "Tempat Lahir Anak": st.text_input("Tempat Lahir Anak"),
-                "Jenis Kelamin Anak": st.selectbox("Jenis Kelamin Anak", ["Laki-laki", "Perempuan"]),
-                "Usia Nifas": st.text_input("Usia Nifas (bila nifas)"),
-                "Usia Kehamilan": st.text_input("Usia Kehamilan (jika hamil)")
+                "Jenis Kelamin Anak": st.selectbox("Jenis Kelamin Anak", ["Laki-laki", "Perempuan"])
             })
 
         st.markdown("---")
@@ -319,7 +315,7 @@ with st.form("form_biodata"):
         baris = ["*Data Tambahan Mom Treatment*"]
         tambah_data(baris, "Usia Nifas (bila nifas)", nifas)
         tambah_data(baris, "Usia Kehamilan (jika hamil)", hamil)
-        tambah_data(baris, "Rencana Persalinan", persalinan)
+        tambah_data(baris, "Jenis Persalinan", persalinan)
         detail_konsultasi_wa = "\n".join(baris)
 
     elif "Mom & Baby (Special Package)" in kategori_layanan:

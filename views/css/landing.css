@@ -118,16 +118,6 @@ header {visibility: hidden;}
     font-weight: 700 !important;
 }
 
-.hero-small-text {
-    font-family: 'Nunito', sans-serif;
-    color: #604F3B;
-    font-size: 1.25rem;
-    line-height: 1.6;
-    margin-bottom: 40px;
-    opacity: 0.85;
-    font-weight: 700 !important;
-}
-
 /* Styling Tombol Oval */
 .stButton button {
     background-color: #FFFFFF !important;
@@ -152,7 +142,7 @@ header {visibility: hidden;}
 }
 
 /* Footer Instagram */
-.hero-footer-right {
+.hero-footer-left {
     position: fixed;
     bottom: 40px;
     right: 5%;
