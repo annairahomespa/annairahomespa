@@ -64,17 +64,17 @@ def get_jam_operasional():
 def duration_treatment():
     if kategori_layanan == "Baby Treatment: usia 0-12 bulan":
         st.write(
-            f'<span style="opacity: {0.7};">Untuk semua treatment pijat bayi berdurasi 30 - 45 menit</span>', 
+            f'<span style="opacity: {0.7};">Durasi ±30-45 menit</span>', 
             unsafe_allow_html=True
         )
     elif kategori_layanan == "Toddler Treatment: usia 1-3 tahun":
         st.write(
-            f'<span style="opacity: {0.7};">Untuk semua treatment pijat Balita berdurasi 45 - 60 menit</span>', 
+            f'<span style="opacity: {0.7};">Durasi ±45-60 menit</span>', 
             unsafe_allow_html=True
         )
     elif kategori_layanan == "Kid Treatment: usia 3-6 tahun":
         st.write(
-            f'<span style="opacity: {0.7};">Untuk semua treatment pijat Anak berdurasi 60 menit</span>', 
+            f'<span style="opacity: {0.7};">Durasi ±60 menit</span>', 
             unsafe_allow_html=True
         )
 
