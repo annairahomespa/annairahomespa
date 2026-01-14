@@ -178,26 +178,26 @@ with st.form("form_biodata"):
     st.subheader("Data Orang Tua & Anak")
     
     if status_client == "**Client Baru**":
-        nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=default_data["nama_bunda"], placeholder="Tulis di sini...")
-        usia_bunda = st.number_input("Usia Bunda", 12, 80, value=default_data["usia_bunda"], placeholder="Tulis di sini...")
+        nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah :red[*]", value=default_data["nama_bunda"], placeholder="Tulis di sini...")
+        usia_bunda = st.number_input("Usia Bunda :red[*]", 12, 80, value=default_data["usia_bunda"], placeholder="Tulis di sini...")
     
         col3, col4 = st.columns(2)
         with col3:
-            nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"], placeholder="Tulis di sini...")
-            usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini", placeholder="Tulis di sini...")
+            nama_anak = st.text_input("Nama Lengkap Anak :red[*]", value=default_data["nama_anak"], placeholder="Tulis di sini...")
+            usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini :red[*]", placeholder="Tulis di sini...")
         
         with col4:
-            tgl_anak = default_data.get("tgl_lahir", datetime.now())
-            tgl_lahir_anak = st.date_input("Tanggal Lahir Anak", value=tgl_anak, format="DD-MM-YYYY")
+            tgl_anak = default_data.get("tgl_lahir :red[*]", datetime.now())
+            tgl_lahir_anak = st.date_input("Tanggal Lahir Anak :red[*]", value=tgl_anak, format="DD-MM-YYYY")
             ig = st.text_input("Akun Instagram", value=default_data["instagram"], placeholder="Tulis di sini...")
     
         info_opsi = ["-- Pilih Opsi --", "Instagram", "Tiktok", "Whatsapp", "Facebook", "Rekomendasi Teman", "Mencari Sendiri di Social Media"]
-        info_sumber = st.selectbox("Bunda/Ayah tau Annaira dari mana?", info_opsi)
+        info_sumber = st.selectbox("Bunda/Ayah tau Annaira dari mana? :red[*]", info_opsi)
     
     else:
-        nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=default_data["nama_bunda"], placeholder="Tulis di sini...")
-        nama_anak = st.text_input("Nama Lengkap Anak", value=default_data["nama_anak"], placeholder="Tulis di sini...")
-        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini", placeholder="Tulis di sini...")
+        nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah :red[*]", value=default_data["nama_bunda"], placeholder="Tulis di sini...")
+        nama_anak = st.text_input("Nama Lengkap Anak :red[*]", value=default_data["nama_anak"], placeholder="Tulis di sini...")
+        usia_anak_saat_ini = st.text_input("Usia Anak Saat Ini :red[*]", placeholder="Tulis di sini...")
 
     st.subheader("Kondisi Khusus / Keluhan")
     opsi_kondisi = [
@@ -217,7 +217,7 @@ with st.form("form_biodata"):
     fix_kondisi = ", ".join(pilihan_user) if pilihan_user else "Tidak Ada Kondisi Khusus/Keluhan"
 
     st.subheader("Alamat Lengkap")
-    alamat = st.text_area("Alamat Rumah", value=default_data["alamat"], placeholder="Tulis di sini...")
+    alamat = st.text_area("Alamat Rumah :red[*]", value=default_data["alamat"], placeholder="Tulis di sini...")
     alamat_pengasuh = st.text_area("Alamat Pengasuh (Jika Ada)", value=default_data["alamat pengasuh"], placeholder="Tulis di sini...")
     patokan = st.text_input("Catatan Patokan Lokasi", value=default_data["patokan"], placeholder="Tulis di sini...")
 
@@ -258,40 +258,40 @@ with st.form("form_biodata"):
         col1, col2 = st.columns(2)
         with col1:
             data = {
-                "WA Bunda": st.text_input("Nomor HP Bunda (WhatsApp)"),
-                "Tgl Lahir Bunda": st.date_input("Tanggal Lahir Bunda", value=date(1990, 1, 1), min_value=date(1945, 1, 1), max_value=date.today(), format="DD-MM-YYYY"),
-                "Pekerjaan": st.text_input("Pekerjaan Bunda"),
+                "WA Bunda": st.text_input("Nomor HP Bunda (WhatsApp) :red[*]"),
+                "Tgl Lahir Bunda": st.date_input("Tanggal Lahir Bunda :red[*]", value=date(1990, 1, 1), min_value=date(1945, 1, 1), max_value=date.today(), format="DD-MM-YYYY"),
+                "Pekerjaan": st.text_input("Pekerjaan Bunda :red[*]"),
             }
         with col2:
             data.update({
-                "Anak Ke": st.number_input("Ananda merupakan anak ke berapa?", min_value=1, step=1),
-                "Tempat Lahir Anak": st.text_input("Tempat Lahir Anak"),
-                "Jenis Kelamin Anak": st.selectbox("Jenis Kelamin Anak", ["Laki-laki", "Perempuan"])
+                "Anak Ke": st.number_input("Ananda merupakan anak ke berapa? :red[*]", min_value=1, step=1),
+                "Tempat Lahir Anak": st.text_input("Tempat Lahir Anak :red[*]"),
+                "Jenis Kelamin Anak": st.selectbox("Jenis Kelamin Anak :red[*]", ["Laki-laki", "Perempuan"])
             })
 
         st.markdown("---")
         st.subheader("Riwayat & Kebiasaan")
-        data["riwayat menyusui sebelumnya"] = st.text_area("Ceritakan riwayat menyusui sebelumnya")
-        data["Riwayat kehamilan dan persalinan saat ini"] = st.text_area("Riwayat kehamilan dan persalinan saat ini")
-        data["Jenis Persalinan"] = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC"])
-        data["Tempat Persalinan"] = st.text_input("Tempat Persalinan (RS/Klinik/Rumah)")
-        data["Usia Kehamilan"] = st.text_input("Usia Kehamilan (saat melahirkan)")
-        data["Bunda dan Bayi melakukan IMD segera setelah persalinan"] = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan?")
-        data["Setelah persalinan Bayi rawat gabung dengan Bunda"] = st.radio("Apakah setelah persalinan Bayi rawat gabung dengan Bunda?", ["Iya", "Tidak"])
-        data["Kondisi kesehatan bayi setelah dilahirkan"] = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan?")
+        data["riwayat menyusui sebelumnya"] = st.text_area("Ceritakan riwayat menyusui sebelumnya :red[*]")
+        data["Riwayat kehamilan dan persalinan saat ini"] = st.text_area("Riwayat kehamilan dan persalinan saat ini :red[*]")
+        data["Jenis Persalinan"] = st.selectbox("Jenis Persalinan :red[*]", ["Persalinan Normal", "Operasi SC"])
+        data["Tempat Persalinan"] = st.text_input("Tempat Persalinan (RS/Klinik/Rumah) :red[*]")
+        data["Usia Kehamilan"] = st.text_input("Usia Kehamilan (saat melahirkan) :red[*]")
+        data["Bunda dan Bayi melakukan IMD segera setelah persalinan"] = st.text_input("Apakah Bunda dan Bayi melakukan IMD segera setelah persalinan? Jika iya, berapa lama IMD dilakukan? :red[*]")
+        data["Setelah persalinan Bayi rawat gabung dengan Bunda"] = st.radio("Apakah setelah persalinan Bayi rawat gabung dengan Bunda? :red[*]", ["Iya", "Tidak"])
+        data["Kondisi kesehatan bayi setelah dilahirkan"] = st.text_area("Bagaimana kondisi kesehatan bayi setelah dilahirkan? :red[*]")
 
         st.markdown("---")
         st.subheader("Kebiasaan & Nutrisi Bayi")
-        data["Bayi pernah menggunakan dot"] = st.text_area("Apakah bayi pernah menggunakan dot?, sejak kapan dan ceritakan kronologisnya")
-        data["Bayi mengkonsumsi ASI atau nutrisi lain"] = st.text_area("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain?")
-        data["Rincian BB"] = st.text_area("Rincian BB (berat badan) bayi tiap bulannya (Lahir - Sekarang)")
+        data["Bayi pernah menggunakan dot"] = st.text_area("Apakah bayi pernah menggunakan dot?, sejak kapan dan ceritakan kronologisnya :red[*]")
+        data["Bayi mengkonsumsi ASI atau nutrisi lain"] = st.text_area("Apakah bayi mengkonsumsi ASI saja atau ada penambahan nutrisi lain? :red[*]")
+        data["Rincian BB"] = st.text_area("Rincian BB (berat badan) bayi tiap bulannya (Lahir - Sekarang) :red[*]")
 
         st.markdown("---")
         st.subheader("Manajemen Laktasi Bunda")
-        data["Kebiasaan Bunda dan hasilnya dalam proses memompa ASI"] = st.text_area("Bagaimana kebiasaan Bunda dan hasilnya dalam proses memompa ASI?")
-        data["Bunda mengkonsumsi ASI booster?"] = st.text_area("Apakah Bunda mengkonsumsi ASI booster? Merk apa saja?")
-        data["Bunda pernah melakukan konsultasi laktasi"] = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi?", ["Pernah", "Belum Pernah"])
-        data["Masalah menyusui Bunda yang belum terjabarkan"] = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan")
+        data["Kebiasaan Bunda dan hasilnya dalam proses memompa ASI"] = st.text_area("Bagaimana kebiasaan Bunda dan hasilnya dalam proses memompa ASI? :red[*]")
+        data["Bunda mengkonsumsi ASI booster?"] = st.text_area("Apakah Bunda mengkonsumsi ASI booster? Merk apa saja? :red[*]")
+        data["Bunda pernah melakukan konsultasi laktasi"] = st.radio("Apakah sebelumnya Bunda pernah melakukan konsultasi laktasi? :red[*]", ["Pernah", "Belum Pernah"])
+        data["Masalah menyusui Bunda yang belum terjabarkan"] = st.text_area("Ceritakan masalah menyusui Bunda yang belum terjabarkan :red[*]")
         
         st.markdown("---")
         st.subheader("Riwayat Kondisi Kesehatan")
@@ -301,8 +301,8 @@ with st.form("form_biodata"):
 
         st.markdown("---")
         st.subheader("Dukungan & Harapan")
-        data["Dukungan suami/keluarga agar Bunda sukses menyusui"] = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui?")
-        data["Harapan Bunda dari konsultasi ini"] = st.text_area("Apa harapan Bunda dari konsultasi ini?")
+        data["Dukungan suami/keluarga agar Bunda sukses menyusui"] = st.text_area("Bagaimana dukungan suami/keluarga agar Bunda sukses menyusui? :red[*]")
+        data["Harapan Bunda dari konsultasi ini"] = st.text_area("Apa harapan Bunda dari konsultasi ini? :red[*]")
 
         return data
 
@@ -328,7 +328,7 @@ with st.form("form_biodata"):
         
         nifas = st.text_input("Usia Nifas (bila nifas)")
         hamil = st.text_input("Usia Kehamilan (jika hamil)")
-        persalinan = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC"])
+        persalinan = st.selectbox("Jenis Persalinan :red[*]", ["Persalinan Normal", "Operasi SC"])
 
         baris = ["*Data Tambahan Mom Treatment*"]
         tambah_data(baris, "Usia Nifas (bila nifas)", nifas)
@@ -342,7 +342,7 @@ with st.form("form_biodata"):
         
         nifas = st.text_input("Usia Nifas (bila nifas)")
         hamil = st.text_input("Usia Kehamilan (jika hamil)")
-        persalinan = st.selectbox("Jenis Persalinan", ["Persalinan Normal", "Operasi SC"])
+        persalinan = st.selectbox("Jenis Persalinan :red[*]", ["Persalinan Normal", "Operasi SC"])
 
         paket_dua_kali = [
             "Love Package: Pijat Laktasi 2x & Pijat Bayi 2x (Rp 400.000)",
@@ -353,9 +353,9 @@ with st.form("form_biodata"):
             st.info("**Paket 2x Kunjungan Terpilih.** Silahkan atur jadwal pertemuan kedua:")
             col_tgl2, col_jam2 = st.columns(2)
             with col_tgl2:
-                rencana_tgl = st.date_input("Rencana Pertemuan Kedua", format="DD-MM-YYYY", key="tgl_2")
+                rencana_tgl = st.date_input("Rencana Pertemuan Kedua :red[*]", format="DD-MM-YYYY", key="tgl_2")
             with col_jam2:
-                jam_pertemuan_2 = st.selectbox("Jam Rencana Pertemuan Kedua", get_jam_operasional(), key="jam_2")
+                jam_pertemuan_2 = st.selectbox("Jam Rencana Pertemuan Kedua :red[*]", get_jam_operasional(), key="jam_2")
         
         ringkasan_consent, ic5 = get_informed_consent()
 
