@@ -145,7 +145,7 @@ header {visibility: hidden;}
 .hero-footer-left {
     position: fixed;
     bottom: 40px;
-    right: 5%;
+    left: 10%;
     color: #604F3B;
     font-size: 0.95rem;
     font-family: 'Nunito';

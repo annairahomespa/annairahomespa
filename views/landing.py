@@ -33,7 +33,7 @@ st.markdown("""
         <p class="hero-subtitle">
             Setiap perjalanan bunda dan si kecil begitu berharga. <br>
             Melalui website ini, Annaira ingin memahami kebutuhan bunda dan bayi dengan 
-            lebih baik agar sesi nantinya dapat berjalan dengan nyaman dan sesuai kebutuhan.<br>
+            lebih baik agar sesi nantinya dapat berjalan dengan nyaman dan sesuai kebutuhan.<br><br>
             Jadwalkan momen spesial bunda<br>dan si kecil bersama Annaira 🤍
         </p>
     </div>

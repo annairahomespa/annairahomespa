@@ -192,7 +192,7 @@ with st.form("form_biodata"):
             ig = st.text_input("Akun Instagram", value=default_data["instagram"], placeholder="Tulis di sini...")
     
         info_opsi = ["-- Pilih Opsi --", "Instagram", "Tiktok", "Whatsapp", "Facebook", "Rekomendasi Teman", "Mencari Sendiri di Social Media"]
-        info_sumber = st.selectbox("Bunda/Ayah tau annaira dari mana?", info_opsi)
+        info_sumber = st.selectbox("Bunda/Ayah tau Annaira dari mana?", info_opsi)
     
     else:
         nama_bunda = st.text_input("Nama Lengkap Bunda/Ayah", value=default_data["nama_bunda"], placeholder="Tulis di sini...")
@@ -467,7 +467,7 @@ if submitted:
         "Tanggal Lahir Anak": tgl_lahir_anak.strftime('%d-%m-%Y'),
         "Usia Anak Saat Ini": usia_anak_saat_ini,
         "Akun Instagram": ig,
-        "Bunda/Ayah tau annaira dari mana?": info_sumber,
+        "Bunda/Ayah tau Annaira dari mana?": info_sumber,
         "Kondisi Khusus / Keluhan": fix_kondisi,
         "Alamat Rumah": alamat,
         "Alamat Pengasuh (Jika Ada)": alamat_pengasuh,
@@ -475,11 +475,9 @@ if submitted:
         "Keterangan": detail_konsultasi_wa
     }
 
-    @st.cache_data(ttl=600, show_spinner=False)
     def ambil_data_master():
         return conn.read(worksheet="Master_Data")
-    
-    @st.cache_data(ttl=600, show_spinner=False)
+
     def ambil_data_rekam_medis():
         return conn.read(worksheet="Data_Rekam_Medis_Konsultasi_Menyusui")
 
